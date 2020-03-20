@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="db.properties"/>
+    <!-- mysql-jdbc驱动地址   POM中配置了dependency 这里不起作用的-->
+    <!--<classPathEntry location="${driver.location}"/>-->
+
+    <context id="context1">
+
+        <!-- 生成的pojo，将implements Serializable-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 连接数据库 -->
+       <jdbcConnection
+                driverClass="${jdbc.driver}"
+                connectionURL="${jdbc.url}"
+                userId="${jdbc.username}"
+                password="${jdbc.password}">
+           <property name="useInformationSchema" value="true"></property>
+
+       </jdbcConnection>
+        <!--  默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer
+           true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal
+       -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- !!!! Model Configurations !!!! -->
+        <!-- 模型配置 -->
+        <javaModelGenerator targetPackage="com.neusoft.bean" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- !!!! Mapper XML Configurations !!!! -->
+        <!--  生成表xml配置  -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- !!!! Mapper Interface Configurations !!!! -->
+        <!-- dao配置 -->
+        <javaClientGenerator targetPackage="com.neusoft.dao" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+
+
+        <!--<table schema="" tableName="Power_Manager" domainObjectName="Manger"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--<property name="selectAllOrderByClause" value="id desc"/>-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+        <!--<table schema="" tableName="Power_manger_role_rf" domainObjectName="MangerRoleRf"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--<property name="selectAllOrderByClause" value="id desc"/>-->
+        <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <!--<table schema="" tableName="Power_role" domainObjectName="Role"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--<property name="selectAllOrderByClause" value="id desc"/>-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+
+        <!--<table schema="" tableName="Power_role_menu_rf" domainObjectName="RoleMenuRf"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--<property name="selectAllOrderByClause" value="id desc"/>-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <table schema="" tableName="pasthistory" domainObjectName="Pasthistory"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="selectAllOrderByClause" value="id desc"/>
+            <property name="useActualColumnNames" value="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>

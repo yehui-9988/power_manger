@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="pdf">
+    <CLASSES>
+      <root url="jar://E:/WorkForIDEA/fileserver/lib/pdf/itext-xtra-5.4.3.jar!/" />
+      <root url="jar://E:/WorkForIDEA/fileserver/lib/pdf/xmlworker-5.4.3.jar!/" />
+      <root url="jar://E:/WorkForIDEA/fileserver/lib/pdf/itext-pdfa-5.4.3.jar!/" />
+      <root url="jar://E:/WorkForIDEA/fileserver/lib/pdf/velocity-1.7.jar!/" />
+      <root url="jar://E:/WorkForIDEA/fileserver/lib/pdf/itextpdf-5.4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

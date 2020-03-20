@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.CasehistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.Casehistory" >
+    <id column="icasehistoryid" property="icasehistoryid" jdbcType="INTEGER" />
+    <result column="vctype" property="vctype" jdbcType="VARCHAR" />
+    <result column="ismuserid" property="ismuserid" jdbcType="INTEGER" />
+    <result column="bdel" property="bdel" jdbcType="VARCHAR" />
+    <result column="vcname" property="vcname" jdbcType="VARCHAR" />
+    <result column="vcnation" property="vcnation" jdbcType="VARCHAR" />
+    <result column="vcsex" property="vcsex" jdbcType="VARCHAR" />
+    <result column="vcoccupation" property="vcoccupation" jdbcType="VARCHAR" />
+    <result column="vcaddress" property="vcaddress" jdbcType="VARCHAR" />
+    <result column="vcmarry" property="vcmarry" jdbcType="VARCHAR" />
+    <result column="vceducation" property="vceducation" jdbcType="VARCHAR" />
+    <result column="vcsmoke" property="vcsmoke" jdbcType="VARCHAR" />
+    <result column="vcmdrecord" property="vcmdrecord" jdbcType="VARCHAR" />
+    <result column="dtregister" property="dtregister" jdbcType="VARCHAR" />
+    <result column="vcserialnum" property="vcserialnum" jdbcType="VARCHAR" />
+    <result column="bsubmit" property="bsubmit" jdbcType="VARCHAR" />
+    <result column="vcidentity" property="vcidentity" jdbcType="VARCHAR" />
+    <result column="vcphone" property="vcphone" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectall" resultMap="BaseResultMap" >
+    select *
+    from casehistory
+    order by icasehistoryid desc
+  </select>
+  <sql id="Base_Column_List" >
+    icasehistoryid, vctype, ismuserid, bdel, vcname, vcnation, vcsex, vcoccupation, vcaddress, 
+    vcmarry, vceducation, vcsmoke, vcmdrecord, dtregister, vcserialnum, bsubmit, vcidentity, 
+    vcphone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from casehistory
+    where icasehistoryid = #{icasehistoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from casehistory
+    where icasehistoryid = #{icasehistoryid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.Casehistory" >
+    insert into casehistory (icasehistoryid, vctype, ismuserid, 
+      bdel, vcname, vcnation, 
+      vcsex, vcoccupation, vcaddress, 
+      vcmarry, vceducation, vcsmoke, 
+      vcmdrecord, dtregister, vcserialnum, 
+      bsubmit, vcidentity, vcphone
+      )
+    values (#{icasehistoryid,jdbcType=INTEGER}, #{vctype,jdbcType=VARCHAR}, #{ismuserid,jdbcType=INTEGER}, 
+      #{bdel,jdbcType=VARCHAR}, #{vcname,jdbcType=VARCHAR}, #{vcnation,jdbcType=VARCHAR}, 
+      #{vcsex,jdbcType=VARCHAR}, #{vcoccupation,jdbcType=VARCHAR}, #{vcaddress,jdbcType=VARCHAR}, 
+      #{vcmarry,jdbcType=VARCHAR}, #{vceducation,jdbcType=VARCHAR}, #{vcsmoke,jdbcType=VARCHAR}, 
+      #{vcmdrecord,jdbcType=VARCHAR}, #{dtregister,jdbcType=VARCHAR}, #{vcserialnum,jdbcType=VARCHAR}, 
+      #{bsubmit,jdbcType=VARCHAR}, #{vcidentity,jdbcType=VARCHAR}, #{vcphone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.Casehistory" >
+    insert into casehistory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="icasehistoryid != null" >
+        icasehistoryid,
+      </if>
+      <if test="vctype != null" >
+        vctype,
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid,
+      </if>
+      <if test="bdel != null" >
+        bdel,
+      </if>
+      <if test="vcname != null" >
+        vcname,
+      </if>
+      <if test="vcnation != null" >
+        vcnation,
+      </if>
+      <if test="vcsex != null" >
+        vcsex,
+      </if>
+      <if test="vcoccupation != null" >
+        vcoccupation,
+      </if>
+      <if test="vcaddress != null" >
+        vcaddress,
+      </if>
+      <if test="vcmarry != null" >
+        vcmarry,
+      </if>
+      <if test="vceducation != null" >
+        vceducation,
+      </if>
+      <if test="vcsmoke != null" >
+        vcsmoke,
+      </if>
+      <if test="vcmdrecord != null" >
+        vcmdrecord,
+      </if>
+      <if test="dtregister != null" >
+        dtregister,
+      </if>
+      <if test="vcserialnum != null" >
+        vcserialnum,
+      </if>
+      <if test="bsubmit != null" >
+        bsubmit,
+      </if>
+      <if test="vcidentity != null" >
+        vcidentity,
+      </if>
+      <if test="vcphone != null" >
+        vcphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="icasehistoryid != null" >
+        #{icasehistoryid,jdbcType=INTEGER},
+      </if>
+      <if test="vctype != null" >
+        #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        #{ismuserid,jdbcType=INTEGER},
+      </if>
+      <if test="bdel != null" >
+        #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcname != null" >
+        #{vcname,jdbcType=VARCHAR},
+      </if>
+      <if test="vcnation != null" >
+        #{vcnation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcsex != null" >
+        #{vcsex,jdbcType=VARCHAR},
+      </if>
+      <if test="vcoccupation != null" >
+        #{vcoccupation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcaddress != null" >
+        #{vcaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="vcmarry != null" >
+        #{vcmarry,jdbcType=VARCHAR},
+      </if>
+      <if test="vceducation != null" >
+        #{vceducation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcsmoke != null" >
+        #{vcsmoke,jdbcType=VARCHAR},
+      </if>
+      <if test="vcmdrecord != null" >
+        #{vcmdrecord,jdbcType=VARCHAR},
+      </if>
+      <if test="dtregister != null" >
+        #{dtregister,jdbcType=VARCHAR},
+      </if>
+      <if test="vcserialnum != null" >
+        #{vcserialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bsubmit != null" >
+        #{bsubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="vcidentity != null" >
+        #{vcidentity,jdbcType=VARCHAR},
+      </if>
+      <if test="vcphone != null" >
+        #{vcphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.Casehistory" >
+    update casehistory
+    <set >
+      <if test="vctype != null" >
+        vctype = #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid = #{ismuserid,jdbcType=INTEGER},
+      </if>
+      <if test="bdel != null" >
+        bdel = #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcname != null" >
+        vcname = #{vcname,jdbcType=VARCHAR},
+      </if>
+      <if test="vcnation != null" >
+        vcnation = #{vcnation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcsex != null" >
+        vcsex = #{vcsex,jdbcType=VARCHAR},
+      </if>
+      <if test="vcoccupation != null" >
+        vcoccupation = #{vcoccupation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcaddress != null" >
+        vcaddress = #{vcaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="vcmarry != null" >
+        vcmarry = #{vcmarry,jdbcType=VARCHAR},
+      </if>
+      <if test="vceducation != null" >
+        vceducation = #{vceducation,jdbcType=VARCHAR},
+      </if>
+      <if test="vcsmoke != null" >
+        vcsmoke = #{vcsmoke,jdbcType=VARCHAR},
+      </if>
+      <if test="vcmdrecord != null" >
+        vcmdrecord = #{vcmdrecord,jdbcType=VARCHAR},
+      </if>
+      <if test="dtregister != null" >
+        dtregister = #{dtregister,jdbcType=VARCHAR},
+      </if>
+      <if test="vcserialnum != null" >
+        vcserialnum = #{vcserialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bsubmit != null" >
+        bsubmit = #{bsubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="vcidentity != null" >
+        vcidentity = #{vcidentity,jdbcType=VARCHAR},
+      </if>
+      <if test="vcphone != null" >
+        vcphone = #{vcphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where icasehistoryid = #{icasehistoryid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.Casehistory" >
+    update casehistory
+    set vctype = #{vctype,jdbcType=VARCHAR},
+      ismuserid = #{ismuserid,jdbcType=INTEGER},
+      bdel = #{bdel,jdbcType=VARCHAR},
+      vcname = #{vcname,jdbcType=VARCHAR},
+      vcnation = #{vcnation,jdbcType=VARCHAR},
+      vcsex = #{vcsex,jdbcType=VARCHAR},
+      vcoccupation = #{vcoccupation,jdbcType=VARCHAR},
+      vcaddress = #{vcaddress,jdbcType=VARCHAR},
+      vcmarry = #{vcmarry,jdbcType=VARCHAR},
+      vceducation = #{vceducation,jdbcType=VARCHAR},
+      vcsmoke = #{vcsmoke,jdbcType=VARCHAR},
+      vcmdrecord = #{vcmdrecord,jdbcType=VARCHAR},
+      dtregister = #{dtregister,jdbcType=VARCHAR},
+      vcserialnum = #{vcserialnum,jdbcType=VARCHAR},
+      bsubmit = #{bsubmit,jdbcType=VARCHAR},
+      vcidentity = #{vcidentity,jdbcType=VARCHAR},
+      vcphone = #{vcphone,jdbcType=VARCHAR}
+    where icasehistoryid = #{icasehistoryid,jdbcType=INTEGER}
+  </update>
+</mapper>

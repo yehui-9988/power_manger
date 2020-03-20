@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.SystemMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.SystemMenu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="menu_title" property="menuTitle" jdbcType="VARCHAR" />
+    <result column="menu_link" property="menuLink" jdbcType="VARCHAR" />
+    <result column="menu_ico" property="menuIco" jdbcType="VARCHAR" />
+    <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
+    <result column="menu_pid" property="menuPid" jdbcType="INTEGER" />
+    <result column="menu_alt" property="menuAlt" jdbcType="VARCHAR" />
+    <result column="menu_createuser" property="menuCreateuser" jdbcType="INTEGER" />
+    <result column="menu_createtime" property="menuCreatetime" jdbcType="TIMESTAMP" />
+    <result column="menu_lastmodify" property="menuLastmodify" jdbcType="TIMESTAMP" />
+    <result column="menu_order" property="menu_order" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, menu_title, menu_link, menu_ico, menu_level, menu_pid, menu_alt, menu_createuser, 
+    menu_createtime, menu_lastmodify,menu_order
+  </sql>
+
+  <select id="selectall" resultMap="BaseResultMap">
+    select * from power_system_menu
+    order by menu_order asc
+  </select>
+  
+  <select id="selectByManagerId" parameterType="int" resultMap="BaseResultMap">
+        SELECT distinct m1.*FROM
+    ( SELECT m.manager_id,men.*FROM power_manager m
+    LEFT JOIN power_manger_role_rf rf on m.manager_id=rf.rf_mangerid
+    INNER JOIN power_role_menu_rf  mrf on rf.rf_roleid=mrf.rmrf_roleid
+    INNER JOIN power_system_menu men on mrf.rmrf_menuid=men.menu_id
+    WHERE m.manager_id=#{managerid} ) t,power_system_menu m1
+    WHERE t.menu_id=m1.menu_id or m1.menu_id=t.menu_pid
+
+
+  </select>
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from power_system_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from power_system_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.SystemMenu" >
+    insert into power_system_menu (menu_id, menu_title, menu_link, 
+      menu_ico, menu_level, menu_pid, 
+      menu_alt, menu_createuser, menu_createtime, 
+      menu_lastmodify,menu_order)
+    values (#{menuId,jdbcType=INTEGER}, #{menuTitle,jdbcType=VARCHAR}, #{menuLink,jdbcType=VARCHAR}, 
+      #{menuIco,jdbcType=VARCHAR}, #{menuLevel,jdbcType=INTEGER}, #{menuPid,jdbcType=INTEGER}, 
+      #{menuAlt,jdbcType=VARCHAR}, #{menuCreateuser,jdbcType=INTEGER}, #{menuCreatetime,jdbcType=TIMESTAMP}, 
+      #{menuLastmodify,jdbcType=TIMESTAMP},#{menu_order,jdbcType=INTEGER},)
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.SystemMenu" >
+    insert into power_system_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="menuTitle != null" >
+        menu_title,
+      </if>
+      <if test="menuLink != null" >
+        menu_link,
+      </if>
+      <if test="menuIco != null" >
+        menu_ico,
+      </if>
+      <if test="menuLevel != null" >
+        menu_level,
+      </if>
+      <if test="menuPid != null" >
+        menu_pid,
+      </if>
+      <if test="menuAlt != null" >
+        menu_alt,
+      </if>
+      <if test="menuCreateuser != null" >
+        menu_createuser,
+      </if>
+      <if test="menuCreatetime != null" >
+        menu_createtime,
+      </if>
+      <if test="menuLastmodify != null" >
+        menu_lastmodify,
+      </if>
+      <if test="menu_order != null" >
+        menu_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuTitle != null" >
+        #{menuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLink != null" >
+        #{menuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIco != null" >
+        #{menuIco,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null" >
+        #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="menuPid != null" >
+        #{menuPid,jdbcType=INTEGER},
+      </if>
+      <if test="menuAlt != null" >
+        #{menuAlt,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCreateuser != null" >
+        #{menuCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="menuCreatetime != null" >
+        #{menuCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuLastmodify != null" >
+        #{menuLastmodify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menu_order != null" >
+        #{menu_order,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.SystemMenu" >
+    update power_system_menu
+    <set >
+      <if test="menuTitle != null" >
+        menu_title = #{menuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLink != null" >
+        menu_link = #{menuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIco != null" >
+        menu_ico = #{menuIco,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null" >
+        menu_level = #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="menuPid != null" >
+        menu_pid = #{menuPid,jdbcType=INTEGER},
+      </if>
+      <if test="menuAlt != null" >
+        menu_alt = #{menuAlt,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCreateuser != null" >
+        menu_createuser = #{menuCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="menuCreatetime != null" >
+        menu_createtime = #{menuCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuLastmodify != null" >
+        menu_lastmodify = #{menuLastmodify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menu_order != null" >
+        menu_order = #{menu_order,jdbcType=INTEGER},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.SystemMenu" >
+    update power_system_menu
+    set menu_title = #{menuTitle,jdbcType=VARCHAR},
+      menu_link = #{menuLink,jdbcType=VARCHAR},
+      menu_ico = #{menuIco,jdbcType=VARCHAR},
+      menu_level = #{menuLevel,jdbcType=INTEGER},
+      menu_pid = #{menuPid,jdbcType=INTEGER},
+      menu_alt = #{menuAlt,jdbcType=VARCHAR},
+      menu_createuser = #{menuCreateuser,jdbcType=INTEGER},
+      menu_createtime = #{menuCreatetime,jdbcType=TIMESTAMP},
+      menu_lastmodify = #{menuLastmodify,jdbcType=TIMESTAMP}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+</mapper>

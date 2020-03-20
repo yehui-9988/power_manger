@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.MangerRoleRfMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.MangerRoleRf" >
+    <id column="rf_id" property="rfId" jdbcType="INTEGER" />
+    <result column="rf_mangerid" property="rfMangerid" jdbcType="INTEGER" />
+    <result column="rf_roleid" property="rfRoleid" jdbcType="INTEGER" />
+    <result column="rf_createuser" property="rfCreateuser" jdbcType="INTEGER" />
+    <result column="rf_createtime" property="rfCreatetime" jdbcType="TIMESTAMP" />
+    <result column="rf_lastmodify" property="rfLastmodify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rf_id, rf_mangerid, rf_roleid, rf_createuser, rf_createtime, rf_lastmodify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from power_manger_role_rf
+    where rf_id = #{rfId,jdbcType=INTEGER}
+  </select>
+  <delete id="deletebyMangerid" parameterType="int">
+    delete from power_manger_role_rf
+    where rf_mangerid=#{Mangerid}
+  </delete>
+  <insert id="insertall">
+    insert into power_manger_role_rf(rf_mangerid,rf_roleid,rf_createtime,rf_lastmodify)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.rfMangerid},#{item.rfRoleid},#{item.rfCreatetime},#{item.rfLastmodify})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from power_manger_role_rf
+    where rf_id = #{rfId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.MangerRoleRf" >
+    insert into power_manger_role_rf (rf_id, rf_mangerid, rf_roleid, 
+      rf_createuser, rf_createtime, rf_lastmodify
+      )
+    values (#{rfId,jdbcType=INTEGER}, #{rfMangerid,jdbcType=INTEGER}, #{rfRoleid,jdbcType=INTEGER}, 
+      #{rfCreateuser,jdbcType=INTEGER}, #{rfCreatetime,jdbcType=TIMESTAMP}, #{rfLastmodify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.MangerRoleRf" >
+    insert into power_manger_role_rf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rfId != null" >
+        rf_id,
+      </if>
+      <if test="rfMangerid != null" >
+        rf_mangerid,
+      </if>
+      <if test="rfRoleid != null" >
+        rf_roleid,
+      </if>
+      <if test="rfCreateuser != null" >
+        rf_createuser,
+      </if>
+      <if test="rfCreatetime != null" >
+        rf_createtime,
+      </if>
+      <if test="rfLastmodify != null" >
+        rf_lastmodify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rfId != null" >
+        #{rfId,jdbcType=INTEGER},
+      </if>
+      <if test="rfMangerid != null" >
+        #{rfMangerid,jdbcType=INTEGER},
+      </if>
+      <if test="rfRoleid != null" >
+        #{rfRoleid,jdbcType=INTEGER},
+      </if>
+      <if test="rfCreateuser != null" >
+        #{rfCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="rfCreatetime != null" >
+        #{rfCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rfLastmodify != null" >
+        #{rfLastmodify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.MangerRoleRf" >
+    update power_manger_role_rf
+    <set >
+      <if test="rfMangerid != null" >
+        rf_mangerid = #{rfMangerid,jdbcType=INTEGER},
+      </if>
+      <if test="rfRoleid != null" >
+        rf_roleid = #{rfRoleid,jdbcType=INTEGER},
+      </if>
+      <if test="rfCreateuser != null" >
+        rf_createuser = #{rfCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="rfCreatetime != null" >
+        rf_createtime = #{rfCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rfLastmodify != null" >
+        rf_lastmodify = #{rfLastmodify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rf_id = #{rfId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.MangerRoleRf" >
+    update power_manger_role_rf
+    set rf_mangerid = #{rfMangerid,jdbcType=INTEGER},
+      rf_roleid = #{rfRoleid,jdbcType=INTEGER},
+      rf_createuser = #{rfCreateuser,jdbcType=INTEGER},
+      rf_createtime = #{rfCreatetime,jdbcType=TIMESTAMP},
+      rf_lastmodify = #{rfLastmodify,jdbcType=TIMESTAMP}
+    where rf_id = #{rfId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.MangerMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.Manger" >
+    <id column="manager_id" property="managerId" jdbcType="INTEGER" />
+    <result column="manager_phone" property="managerPhone" jdbcType="VARCHAR" />
+    <result column="manager_sex" property="managerSex" jdbcType="VARCHAR" />
+    <result column="manager_idcard" property="managerIdcard" jdbcType="VARCHAR" />
+    <result column="manager_createuser" property="managerCreateuser" jdbcType="INTEGER" />
+    <result column="manager_createtime" property="managerCreatetime" jdbcType="TIMESTAMP" />
+    <result column="manager_lastmodify" property="managerLastmodify" jdbcType="TIMESTAMP" />
+    <result column="manager_password" property="managerPassword" jdbcType="VARCHAR" />
+    <result column="manager_state" property="managerState" jdbcType="INTEGER" />
+    <result column="manager_remark" property="managerRemark" jdbcType="VARCHAR" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="manager_img" property="managerImg" jdbcType="VARCHAR" />
+    <collection property="roles" ofType="com.neusoft.bean.Role">
+      <id column="role_id" property="roleId" jdbcType="INTEGER" />
+      <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+      <result column="role_createuser" property="roleCreateuser" jdbcType="INTEGER" />
+      <result column="role_createtime" property="roleCreatetime" jdbcType="TIMESTAMP" />
+      <result column="role_lastmodify" property="roleLastmodify" jdbcType="TIMESTAMP" />
+    </collection>
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    manager_id, manager_phone, manager_sex, manager_idcard, manager_createuser, manager_createtime, 
+    manager_lastmodify, manager_password, manager_state, manager_remark, manager_name, 
+    manager_img
+  </sql>
+  <select id="loginselect" parameterType="map"  resultMap="BaseResultMap">
+ <!--登陆-->
+    select * from power_manager
+    where manager_phone=#{username}and manager_password=#{password}
+  </select>
+
+  <select id="selectall" parameterType="map" resultMap="BaseResultMap">
+    SELECT p.*,ro.* from power_manager p
+    LEFT JOIN power_manger_role_rf rf on p.manager_id=rf.rf_mangerid
+    LEFT JOIN power_role ro on rf.rf_roleid=ro.role_id
+    <where>
+      <if test="param!=null">
+        manager_phone like CONCAT('%',#{param},'%')
+        or manager_idcard like CONCAT('%',#{param},'%')
+        or manager_name like CONCAT('%',#{param},'%')
+      </if>
+      <if test="phone!=null">
+        and manager_phone=#{phone}
+      </if>
+
+    </where>
+    <if test="orderx==null">
+      order  by manager_id asc
+    </if>
+    <if test="orderx!=null">
+      order by ${prop} ${orderx}
+    </if>
+
+
+  </select>
+  <delete id="deleteall">
+
+    delete from power_manager
+    where manager_id in 
+    <foreach collection="list" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from power_manager
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from power_manager
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.Manger" >
+    insert into power_manager (manager_id, manager_phone, manager_sex, 
+      manager_idcard, manager_createuser, manager_createtime, 
+      manager_lastmodify, manager_password, manager_state, 
+      manager_remark, manager_name, manager_img
+      )
+    values (#{managerId,jdbcType=INTEGER}, #{managerPhone,jdbcType=VARCHAR}, #{managerSex,jdbcType=VARCHAR}, 
+      #{managerIdcard,jdbcType=VARCHAR}, #{managerCreateuser,jdbcType=INTEGER}, #{managerCreatetime,jdbcType=TIMESTAMP}, 
+      #{managerLastmodify,jdbcType=TIMESTAMP}, #{managerPassword,jdbcType=VARCHAR}, #{managerState,jdbcType=INTEGER}, 
+      #{managerRemark,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, #{managerImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.Manger" >
+    insert into power_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerId != null" >
+        manager_id,
+      </if>
+      <if test="managerPhone != null" >
+        manager_phone,
+      </if>
+      <if test="managerSex != null" >
+        manager_sex,
+      </if>
+      <if test="managerIdcard != null" >
+        manager_idcard,
+      </if>
+      <if test="managerCreateuser != null" >
+        manager_createuser,
+      </if>
+      <if test="managerCreatetime != null" >
+        manager_createtime,
+      </if>
+      <if test="managerLastmodify != null" >
+        manager_lastmodify,
+      </if>
+      <if test="managerPassword != null" >
+        manager_password,
+      </if>
+      <if test="managerState != null" >
+        manager_state,
+      </if>
+      <if test="managerRemark != null" >
+        manager_remark,
+      </if>
+      <if test="managerName != null" >
+        manager_name,
+      </if>
+      <if test="managerImg != null" >
+        manager_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerId != null" >
+        #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="managerPhone != null" >
+        #{managerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="managerSex != null" >
+        #{managerSex,jdbcType=VARCHAR},
+      </if>
+      <if test="managerIdcard != null" >
+        #{managerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="managerCreateuser != null" >
+        #{managerCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="managerCreatetime != null" >
+        #{managerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerLastmodify != null" >
+        #{managerLastmodify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerPassword != null" >
+        #{managerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="managerState != null" >
+        #{managerState,jdbcType=INTEGER},
+      </if>
+      <if test="managerRemark != null" >
+        #{managerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerImg != null" >
+        #{managerImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.Manger" >
+    update power_manager
+    <set >
+      <if test="managerPhone != null" >
+        manager_phone = #{managerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="managerSex != null" >
+        manager_sex = #{managerSex,jdbcType=VARCHAR},
+      </if>
+      <if test="managerIdcard != null" >
+        manager_idcard = #{managerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="managerCreateuser != null" >
+        manager_createuser = #{managerCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="managerCreatetime != null" >
+        manager_createtime = #{managerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerLastmodify != null" >
+        manager_lastmodify = #{managerLastmodify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerPassword != null" >
+        manager_password = #{managerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="managerState != null" >
+        manager_state = #{managerState,jdbcType=INTEGER},
+      </if>
+      <if test="managerRemark != null" >
+        manager_remark = #{managerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="managerName != null" >
+        manager_name = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerImg != null" >
+        manager_img = #{managerImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.Manger" >
+    update power_manager
+    set manager_phone = #{managerPhone,jdbcType=VARCHAR},
+      manager_sex = #{managerSex,jdbcType=VARCHAR},
+      manager_idcard = #{managerIdcard,jdbcType=VARCHAR},
+      manager_createuser = #{managerCreateuser,jdbcType=INTEGER},
+      manager_createtime = #{managerCreatetime,jdbcType=TIMESTAMP},
+      manager_lastmodify = #{managerLastmodify,jdbcType=TIMESTAMP},
+      manager_password = #{managerPassword,jdbcType=VARCHAR},
+      manager_state = #{managerState,jdbcType=INTEGER},
+      manager_remark = #{managerRemark,jdbcType=VARCHAR},
+      manager_name = #{managerName,jdbcType=VARCHAR},
+      manager_img = #{managerImg,jdbcType=VARCHAR}
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </update>
+</mapper>

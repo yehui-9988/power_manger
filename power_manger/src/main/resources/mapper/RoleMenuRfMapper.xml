@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.RoleMenuRfMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.RoleMenuRf" >
+    <id column="rmrf_id" property="rmrfId" jdbcType="INTEGER" />
+    <result column="rmrf_roleid" property="rmrfRoleid" jdbcType="INTEGER" />
+    <result column="rmrf_menuid" property="rmrfMenuid" jdbcType="INTEGER" />
+    <result column="rmrf_createuser" property="rmrfCreateuser" jdbcType="INTEGER" />
+    <result column="rmrf_createtime" property="rmrfCreatetime" jdbcType="TIMESTAMP" />
+    <result column="rmrf_lastmodify" property="rmrfLastmodify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rmrf_id, rmrf_roleid, rmrf_menuid, rmrf_createuser, rmrf_createtime, rmrf_lastmodify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from power_role_menu_rf
+    where rmrf_id = #{rmrfId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectbyroleid" resultMap="BaseResultMap">
+    select *from power_role_menu_rf
+    where rmrf_roleid=#{roleid}
+  </select>
+
+  <delete id="deletebyroleid" parameterType="int">
+   delete from power_role_menu_rf
+   where rmrf_roleid=#{roleid}
+  </delete>
+  
+  <insert id="insertAll">
+  insert into power_role_menu_rf(rmrf_roleid,rmrf_menuid,rmrf_createtime,rmrf_lastmodify)
+  values 
+  <foreach collection="list" item="item" separator=",">
+    (#{item.rmrfRoleid},#{item.rmrfMenuid},#{item.rmrfCreatetime},#{item.rmrfLastmodify})
+  </foreach>
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from power_role_menu_rf
+    where rmrf_id = #{rmrfRoleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.RoleMenuRf" >
+    insert into power_role_menu_rf (rmrf_id, rmrf_roleid, rmrf_menuid, 
+      rmrf_createuser, rmrf_createtime, rmrf_lastmodify
+      )
+    values (#{rmrfId,jdbcType=INTEGER}, #{rmrfRoleid,jdbcType=INTEGER}, #{rmrfMenuid,jdbcType=INTEGER}, 
+      #{rmrfCreateuser,jdbcType=INTEGER}, #{rmrfCreatetime,jdbcType=TIMESTAMP}, #{rmrfLastmodify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.RoleMenuRf" >
+    insert into power_role_menu_rf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rmrfId != null" >
+        rmrf_id,
+      </if>
+      <if test="rmrfRoleid != null" >
+        rmrf_roleid,
+      </if>
+      <if test="rmrfMenuid != null" >
+        rmrf_menuid,
+      </if>
+      <if test="rmrfCreateuser != null" >
+        rmrf_createuser,
+      </if>
+      <if test="rmrfCreatetime != null" >
+        rmrf_createtime,
+      </if>
+      <if test="rmrfLastmodify != null" >
+        rmrf_lastmodify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rmrfId != null" >
+        #{rmrfId,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfRoleid != null" >
+        #{rmrfRoleid,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfMenuid != null" >
+        #{rmrfMenuid,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfCreateuser != null" >
+        #{rmrfCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfCreatetime != null" >
+        #{rmrfCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rmrfLastmodify != null" >
+        #{rmrfLastmodify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.RoleMenuRf" >
+    update power_role_menu_rf
+    <set >
+      <if test="rmrfRoleid != null" >
+        rmrf_roleid = #{rmrfRoleid,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfMenuid != null" >
+        rmrf_menuid = #{rmrfMenuid,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfCreateuser != null" >
+        rmrf_createuser = #{rmrfCreateuser,jdbcType=INTEGER},
+      </if>
+      <if test="rmrfCreatetime != null" >
+        rmrf_createtime = #{rmrfCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rmrfLastmodify != null" >
+        rmrf_lastmodify = #{rmrfLastmodify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rmrf_id = #{rmrfId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.RoleMenuRf" >
+    update power_role_menu_rf
+    set rmrf_roleid = #{rmrfRoleid,jdbcType=INTEGER},
+      rmrf_menuid = #{rmrfMenuid,jdbcType=INTEGER},
+      rmrf_createuser = #{rmrfCreateuser,jdbcType=INTEGER},
+      rmrf_createtime = #{rmrfCreatetime,jdbcType=TIMESTAMP},
+      rmrf_lastmodify = #{rmrfLastmodify,jdbcType=TIMESTAMP}
+    where rmrf_id = #{rmrfId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.PasthistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.Pasthistory" >
+    <id column="ipasthistoryid" property="ipasthistoryid" jdbcType="INTEGER" />
+    <result column="icaseid" property="icaseid" jdbcType="INTEGER" />
+    <result column="vctype" property="vctype" jdbcType="VARCHAR" />
+    <result column="ismuserid" property="ismuserid" jdbcType="INTEGER" />
+    <result column="bdel" property="bdel" jdbcType="VARCHAR" />
+    <result column="vcdiseasename" property="vcdiseasename" jdbcType="VARCHAR" />
+    <result column="dtfind" property="dtfind" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ipasthistoryid, icaseid, vctype, ismuserid, bdel, vcdiseasename, dtfind
+  </sql>
+  <select id="selectByicaseid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pasthistory
+    where icaseid=#{icaseid}
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pasthistory
+    where ipasthistoryid = #{ipasthistoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pasthistory
+    where ipasthistoryid = #{ipasthistoryid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.Pasthistory" >
+    insert into pasthistory (ipasthistoryid, icaseid, vctype, 
+      ismuserid, bdel, vcdiseasename, 
+      dtfind)
+    values (#{ipasthistoryid,jdbcType=INTEGER}, #{icaseid,jdbcType=INTEGER}, #{vctype,jdbcType=VARCHAR}, 
+      #{ismuserid,jdbcType=INTEGER}, #{bdel,jdbcType=VARCHAR}, #{vcdiseasename,jdbcType=VARCHAR}, 
+      #{dtfind,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.Pasthistory" >
+    insert into pasthistory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ipasthistoryid != null" >
+        ipasthistoryid,
+      </if>
+      <if test="icaseid != null" >
+        icaseid,
+      </if>
+      <if test="vctype != null" >
+        vctype,
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid,
+      </if>
+      <if test="bdel != null" >
+        bdel,
+      </if>
+      <if test="vcdiseasename != null" >
+        vcdiseasename,
+      </if>
+      <if test="dtfind != null" >
+        dtfind,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ipasthistoryid != null" >
+        #{ipasthistoryid,jdbcType=INTEGER},
+      </if>
+      <if test="icaseid != null" >
+        #{icaseid,jdbcType=INTEGER},
+      </if>
+      <if test="vctype != null" >
+        #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        #{ismuserid,jdbcType=INTEGER},
+      </if>
+      <if test="bdel != null" >
+        #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdiseasename != null" >
+        #{vcdiseasename,jdbcType=VARCHAR},
+      </if>
+      <if test="dtfind != null" >
+        #{dtfind,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.Pasthistory" >
+    update pasthistory
+    <set >
+      <if test="icaseid != null" >
+        icaseid = #{icaseid,jdbcType=INTEGER},
+      </if>
+      <if test="vctype != null" >
+        vctype = #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid = #{ismuserid,jdbcType=INTEGER},
+      </if>
+      <if test="bdel != null" >
+        bdel = #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdiseasename != null" >
+        vcdiseasename = #{vcdiseasename,jdbcType=VARCHAR},
+      </if>
+      <if test="dtfind != null" >
+        dtfind = #{dtfind,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ipasthistoryid = #{ipasthistoryid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.Pasthistory" >
+    update pasthistory
+    set icaseid = #{icaseid,jdbcType=INTEGER},
+      vctype = #{vctype,jdbcType=VARCHAR},
+      ismuserid = #{ismuserid,jdbcType=INTEGER},
+      bdel = #{bdel,jdbcType=VARCHAR},
+      vcdiseasename = #{vcdiseasename,jdbcType=VARCHAR},
+      dtfind = #{dtfind,jdbcType=VARCHAR}
+    where ipasthistoryid = #{ipasthistoryid,jdbcType=INTEGER}
+  </update>
+</mapper>
