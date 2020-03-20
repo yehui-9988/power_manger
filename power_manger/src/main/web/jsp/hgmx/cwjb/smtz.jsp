@@ -193,6 +193,7 @@
                } else {
                    this.master_user.sel = JSON.parse(JSON.stringify(row));
                    row.isSet = true;
+                   console.log("测试github");
                }
            }
        }
