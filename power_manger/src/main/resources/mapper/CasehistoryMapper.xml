@@ -20,18 +20,27 @@
     <result column="bsubmit" property="bsubmit" jdbcType="VARCHAR" />
     <result column="vcidentity" property="vcidentity" jdbcType="VARCHAR" />
     <result column="vcphone" property="vcphone" jdbcType="VARCHAR" />
+
   </resultMap>
 
+  <resultMap id="max" type="java.util.Map">
+    <id column="maxid" property="maxid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    icasehistoryid, vctype, ismuserid, bdel, vcname, vcnation, vcsex, vcoccupation, vcaddress,
+    vcmarry, vceducation, vcsmoke, vcmdrecord, dtregister, vcserialnum, bsubmit, vcidentity,
+    vcphone
+  </sql>
   <select id="selectall" resultMap="BaseResultMap" >
     select *
     from casehistory
     order by icasehistoryid desc
   </select>
-  <sql id="Base_Column_List" >
-    icasehistoryid, vctype, ismuserid, bdel, vcname, vcnation, vcsex, vcoccupation, vcaddress, 
-    vcmarry, vceducation, vcsmoke, vcmdrecord, dtregister, vcserialnum, bsubmit, vcidentity, 
-    vcphone
-  </sql>
+
+  <select id="selectmaxicaeid" resultMap="max" >
+    select MAX(icasehistoryid) maxid from casehistory
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

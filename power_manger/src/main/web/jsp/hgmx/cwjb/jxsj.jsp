@@ -46,19 +46,10 @@
 
 
         </template>
-            <el-row :gutter="3">
-
-                <el-col :span="8" :offset="6">
-                    <el-button type="primary" >确认提交</el-button>
-                </el-col>
-
-                <el-col :span="8" >
+      <%--  ///下一步的按钮 可有可无--%>
+               <%-- <el-col :span="8" >
                     <el-button type="primary"  @click="changetab">{{labelbutton}}<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-                </el-col>
-
-            </el-row>
-
-
+                </el-col>--%>
     </el-dialog>
     <div style="margin-bottom: 10px;margin-top: 10px" >
         <el-row :gutter="20">
@@ -186,7 +177,7 @@
                 },{
                     title: '医生处方记录',
                     name: '7',
-                    src:''
+                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
                 },
                     ],
                 dialogsjgl:false,
@@ -239,7 +230,8 @@
             },
             savejxsj(){
                 this.dialogsjgl=true;
-                console.log(this.$refs.formhdsj);
+                this.icasehistoryid=0;
+
             },
             selectrow(row)
             {

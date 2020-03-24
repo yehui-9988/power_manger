@@ -3,6 +3,7 @@ package com.neusoft.dao;
 import com.neusoft.bean.Casehistory;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CasehistoryMapper {
     int deleteByPrimaryKey(Integer icasehistoryid);
@@ -18,4 +19,5 @@ public interface CasehistoryMapper {
     int updateByPrimaryKey(Casehistory record);
 
      List<Casehistory> selectall();
+    List<Map<String,Integer>> selectmaxicaeid ();
 }

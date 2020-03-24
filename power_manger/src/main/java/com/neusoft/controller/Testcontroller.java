@@ -22,6 +22,6 @@ public class Testcontroller{
 
     @RequestMapping("hgmx/cwjb/jxsj")
     public String openCwjbJxsj(){
-        return "hgmx/cwjb/jxsj";
-    }
+       return "hgmx/cwjb/jxsj";
+  }
 }

@@ -43,7 +43,7 @@
     <el-row>
 
         <el-col :span="24">
-            <el-divider content-position="center">合并疾病</el-divider>
+            <el-divider content-position="center">合并疾病/既往病历史</el-divider>
             <el-table size="mini" :data="master_user.data" empty-text="暂无合并疾病" border style="width: 100%" highlight-current-row>
                 <el-table-column type="index" label="序号"></el-table-column>
 
@@ -59,15 +59,13 @@
                 </el-table-column>
                 <el-table-column label="操作" style="width:20%">
                     <template slot-scope="scope">
-                            <span class="el-tag el-tag--info el-tag--mini" style="cursor: pointer;" @click="savedata(scope.row,scope.$index)">
+                            <span class="el-tag el-tag--info el-tag--mini" style="cursor: pointer;" @click="savedata(scope.row,scope.$index,false)">
                                保存
                             </span>
-                        <span v-if="!scope.row.isSet" class="el-tag el-tag--danger el-tag--mini" style="cursor: pointer;">
+                        <span class="el-tag el-tag--danger el-tag--mini" style="cursor: pointer;" @click="deleterow(scope.row,scope.$index,true)">
                                 删除
                             </span>
-                        <span v-else class="el-tag  el-tag--mini" style="cursor: pointer;" @click="pwdChange(scope.row,scope.$index,false)">
-                                取消
-                            </span>
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -93,6 +91,7 @@
        el: '#app',
        data(){
            return{
+               paramid:<%=id%>,
            master_user: {
                sel:[],
                columns: [
@@ -100,12 +99,14 @@
                    { field: 'dtfind', title: "发生日期", width:"200px"  }
                ],
                data:[],
-           },
+                },
+           pasthistory:{}
 
        }
     },
        created:function(){
           this.readMasterUser();
+          this.clearall();
 
 
        },
@@ -114,7 +115,7 @@
                {
                    var self=this;
                    var data={
-                       'id':<%=id%>
+                       'id':this.paramid
                    }
                    axios.get("<%=basePath%>admin/casehistory/selectbyicaseid",{
                        params: data
@@ -141,61 +142,64 @@
                //     if (i.isSet)
                //     return this.$message.warning("请先保存当前编辑项");
                // }
-               let j = { id: 0, vcdiseasename: "", dtfind: "",  isSet: true};
+               let j = { id: 0, vcdiseasename: "",bdel:0,icaseid:<%=id%>,vctype:3, dtfind: "",  isSet: true};
                this.master_user.data.push(j);
                this.master_user.sel = j
            },
            //保存
-           savedata(row,index)
+           savedata(row,index,cg)
            {
-               console.log(row);
-
-
-               if (row.id==0)
+               if (row.isSet&&!cg)
                {
+                   var  self=this;
+                   var  data =this.master_user.sel;
+                   for (let k in data)
+                       row[k] = data[k];
+                   self.pasthistory=row;
 
-                   this.master_user.sel.isSet=false;
-                   var i=1;
-                   i++;
-                   this.master_user.sel.id=i;
-                   this.master_user.data.push(this.master_user.sel)
+                   axios.post("<%=basePath%>admin/casehistory/saverow",Qs.stringify(self.pasthistory))
+                       .then(function (response) {
+                           if (response.data.code==10000)
+                           {
+                               self.$message({
+                                   type: 'success',
+                                   message: "保存成功!"
+                               });
+                               row.isSet=false;
+                               console.log(this.master_user.data)
+                           }
+
+                           //然后这边重新读取表格数据
+
+
+                   }).catch(function (error) {
+                       console.log(error);
+                   });
+
+
+
+               }else {
+                   this.$message('此记录已经被保存,请不要重复操作');
                }
 
            },
-           //修改
-           pwdChange(row, index, cg) {
-               //点击修改 判断是否已经保存所有操作
-               // for (let i of this.master_user.data) {
-               //     if (i.isSet && i.id != row.id) {
-               //         this.$message.warning("请先保存当前编辑项");
-               //         return false;
-               //     }
-               // }
-               //是否是取消操作
-               if (!cg) {
-                   if (!this.master_user.sel.id) this.master_user.data.splice(index, 1);
-                   return row.isSet = !row.isSet;
-               }
-               //提交数据
-               if (row.isSet) {
-                   //项目是模拟请求操作  自己修改下
-                   (function () {
-                       let data = JSON.parse(JSON.stringify(this.master_user.sel));
-                       for (let k in data) row[k] = data[k];
-                       this.$message({
-                           type: 'success',
-                           message: "保存成功!"
-                       });
-                       //然后这边重新读取表格数据
-                       this.readMasterUser();
-                       row.isSet = false;
-                   })();
-               } else {
-                   this.master_user.sel = JSON.parse(JSON.stringify(row));
-                   row.isSet = true;
+           //删除
+           deleterow(row,index)
+           {
+               this.master_user.data.splice(index,1);
+           },
+           //清除表格
+           clearall()
+           {
+               if (this.paramid==0)
+               {
 
+                   this.master_user.data=[];
                }
+
            }
+
+
        }
    });
 </script>
