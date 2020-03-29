@@ -1,6 +1,9 @@
 package com.neusoft.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.neusoft.bean.Casehistory;
+import com.neusoft.bean.Manger;
 import com.neusoft.bean.Pasthistory;
 import com.neusoft.dao.CasehistoryMapper;
 import com.neusoft.dao.PasthistoryMapper;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.BinaryClient;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -25,15 +29,25 @@ public class CasehistoryController {
 
     @RequestMapping("selectall")
     @ResponseBody
-    public Object selectAll()
-    {
-        ResultBean bean;
-        List<Casehistory> list=mapper.selectall();
-        bean=new ResultBean();
-        bean.setObject(list);
-        bean.setCode(10000);
+    public Object selectAll(Integer index,Integer size) {
+        index = index == null ? 1 : index;
+        size = size == null ? 5 : size;
+        try {
+
+            PageHelper.startPage(index, size);
+            List<Casehistory> list = mapper.selectall();
+            PageInfo<Casehistory> info = new PageInfo<>(list);
+            bean = new ResultBean();
+            bean.setObject(info);
+            bean.setCode(10000);
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return bean;
     }
+
     @RequestMapping("selectbyid")
     @ResponseBody
     public Object selectbyid(int id)
@@ -56,13 +70,14 @@ public class CasehistoryController {
         bean.setCode(10000);
         return bean;
     }
-    @RequestMapping("saverow")
+    @RequestMapping("savepasthistory")
     @ResponseBody
     public Object saverow(Pasthistory pasthistory){
 
 
 
        int result= pamapper.insertSelective(pasthistory);
+
         if (result>0)
         {
             bean=new ResultBean();
@@ -74,22 +89,82 @@ public class CasehistoryController {
     }
     @RequestMapping("savecasehistory")
     @ResponseBody
-    public Object savecasehistory(Casehistory casehistory)
+    public Object savecasehistory(Casehistory casehistory, HttpSession session)
     {
-        int result=mapper.insertSelective(casehistory);
-         List<Map<String,Integer>> list=mapper.selectmaxicaeid();
-         Map<String,Integer> map=list.get(0);
-         Integer maxid=map.get("maxid");
+        int result=0;
+       Manger manger=(Manger) session.getAttribute(Manger.CURRENT_MANAGER);
+       casehistory.setIsmuserid(manger.getManagerId());
+       if (null!=casehistory.getIcasehistoryid())
+       {
+            result= mapper.updateByPrimaryKeySelective(casehistory);
+
+       }
+       else {
+            result=mapper.insertSelective(casehistory);
+       }
+
+
+
 
         if(result>0)
         {
             bean=new ResultBean();
             bean.setCode(10000);
-            bean.setObject(maxid);
+
 
         }
 
         return bean;
+    }
+    @RequestMapping("deletecasehistory")
+    @ResponseBody
+    public  Object deletecasehistory(int id)
+    {
+     int  result= mapper.deleteByPrimaryKey(id);
+     if (result>0)
+     {
+         bean.setCode(10000);
+
+     }
+      return bean;
+    }
+
+    @RequestMapping("deletepasthistory")
+    @ResponseBody
+    public  Object deletepasthistory(int ipasthistoryid)
+    {
+
+       int result= pamapper.deleteByPrimaryKey(ipasthistoryid);
+
+        if(result>0)
+        {
+            bean=new ResultBean();
+            bean.setCode(10000);
+            bean.setMessage("删除成功");
+
+        }
+
+        return bean;
+
+    }
+
+    @RequestMapping("selectmaxid")
+    @ResponseBody
+    public  Object selectmaxid()
+    {
+
+        List<Map<String,Integer>> list=mapper.selectmaxicaeid();
+        Map<String,Integer> map=list.get(0);
+        Integer maxid=map.get("maxid");
+        bean=new ResultBean();
+        bean.setCode(10000);
+        bean.setMessage("获取当前最大id");
+        bean.setObject(maxid);
+
+
+
+        return bean;
+
     }
 
 

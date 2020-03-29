@@ -157,6 +157,7 @@
                  offset: 5,//分栏偏移数
                  gutter: 1,//间隔数
                  id: <%=id%>,
+                 maxid:'',
 
 
              }
@@ -166,25 +167,41 @@
 
          },
          methods: {
+
              ///加载表单数据
 
              loaddata() {
-                 if (this.id != 0) {
-                     var self = this;
-                     var data = {
-                         'id': this.id
-                     }
-                     axios.get("<%=basePath%>admin/casehistory/selectbyid", {
-                         params: data
-                     }).then(function (response) {
-                         self.form = response.data.object;
+                 var self=this;
+                 let maxid;
+                 axios.get("<%=basePath%>admin/casehistory/selectmaxid")
+                     .then(function (response) {
+
+                         if (response.data.code == '10000') {
+                             maxid =response.data.object;//获取当前最大值
+                             if (parseInt(self.id)<=maxid) {
+
+                                 var data = {
+                                     'id': self.id
+                                 }
+                                 axios.get("<%=basePath%>admin/casehistory/selectbyid", {
+                                     params: data
+                                 }).then(function (response) {
+                                     self.form = response.data.object;
+
+                                 }).catch(function (error) {
+                                     console.log(error);
+                                 });
+                             } else {
+                                 // this.form = {};
+                             }
+                         }
 
                      }).catch(function (error) {
-                         console.log(error);
-                     });
-                 } else {
-                     this.form = {};
-                 }
+
+                 });
+
+
+
 
              },
              onSubmit() {
@@ -198,9 +215,9 @@
                                  type: 'success',
                                  message: "保存成功!"
                              });
-                             row.isSet = false;
-                             console.log(this.master_user.data)
+                             self.loaddata();
                          }
+
 
                      });
                  //单点按钮，执行到下一个tab

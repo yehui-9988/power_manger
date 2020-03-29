@@ -24,6 +24,8 @@
             padding: 0px;
             margin: 0px;
         }
+
+
         .avatar-uploader .el-upload {
             border: 1px dashed #d9d9d9;
             border-radius: 6px;
@@ -57,13 +59,12 @@
 
      <div style="margin-bottom: 10px;margin-top: 10px" >
 
-         <el-row :gutter="20">
+         <el-row :gutter="20" style="height:10px">
              <el-col :span="8">
                  <div class="grid-content bg-purple">
                      <el-button-group>
                          <el-button type="primary" icon="el-icon-circle-plus-outline " @click="save"></el-button>
                          <el-button type="primary" icon="el-icon-share"></el-button>
-
                      </el-button-group>
 
                  </div>
@@ -115,7 +116,8 @@
                  :data="list"
                  ref="tb1"
                  border
-                 style="width: 100%">
+                 style="width:100%;
+            ">
 
              <el-table-column
                      fixed

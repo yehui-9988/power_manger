@@ -89,7 +89,7 @@
             <!--<property name="useActualColumnNames" value="false" />-->
         <!--</table>-->
 
-        <table schema="" tableName="pasthistory" domainObjectName="Pasthistory"
+        <table schema="" tableName="vitalsigns" domainObjectName="Vitalsigns"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

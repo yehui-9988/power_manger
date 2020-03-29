@@ -55,7 +55,7 @@
 </head>
 <body>
  <div id="app">
-       <div style="margin-bottom: 10px;margin-top: 10px" >
+       <div style="margin-bottom:10px;margin-top:10px" >
 
            <el-row :gutter="20">
                <el-col :span="6">
@@ -155,7 +155,9 @@
                  border
                  :default-sort = "{prop: 'managerId', order: 'descending'}"
                  @sort-change="sort"
-                 style="width:100%;">
+                 style="width:100%;"
+                 :row-style="{height:'0px'}"
+                 :cell-style="{padding:'0px'}">
              <el-table-column
                      type="selection"
                      width="55"
