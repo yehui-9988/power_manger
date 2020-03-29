@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.PretreatmentMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.Pretreatment" >
+    <id column="preid" property="preid" jdbcType="INTEGER" />
+    <result column="icaseid" property="icaseid" jdbcType="INTEGER" />
+    <result column="vctype" property="vctype" jdbcType="VARCHAR" />
+    <result column="ismuserid" property="ismuserid" jdbcType="VARCHAR" />
+    <result column="bdel" property="bdel" jdbcType="VARCHAR" />
+    <result column="vcdrugname" property="vcdrugname" jdbcType="VARCHAR" />
+    <result column="vczjl" property="vczjl" jdbcType="VARCHAR" />
+    <result column="vcdw" property="vcdw" jdbcType="VARCHAR" />
+    <result column="vcgycj" property="vcgycj" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    preid, icaseid, vctype, ismuserid, bdel, vcdrugname, vczjl, vcdw, vcgycj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pretreatment
+    where preid = #{preid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pretreatment
+    where preid = #{preid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.Pretreatment" >
+    insert into pretreatment (preid, icaseid, vctype, 
+      ismuserid, bdel, vcdrugname, 
+      vczjl, vcdw, vcgycj
+      )
+    values (#{preid,jdbcType=INTEGER}, #{icaseid,jdbcType=INTEGER}, #{vctype,jdbcType=VARCHAR}, 
+      #{ismuserid,jdbcType=VARCHAR}, #{bdel,jdbcType=VARCHAR}, #{vcdrugname,jdbcType=VARCHAR}, 
+      #{vczjl,jdbcType=VARCHAR}, #{vcdw,jdbcType=VARCHAR}, #{vcgycj,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.Pretreatment" >
+    insert into pretreatment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="preid != null" >
+        preid,
+      </if>
+      <if test="icaseid != null" >
+        icaseid,
+      </if>
+      <if test="vctype != null" >
+        vctype,
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid,
+      </if>
+      <if test="bdel != null" >
+        bdel,
+      </if>
+      <if test="vcdrugname != null" >
+        vcdrugname,
+      </if>
+      <if test="vczjl != null" >
+        vczjl,
+      </if>
+      <if test="vcdw != null" >
+        vcdw,
+      </if>
+      <if test="vcgycj != null" >
+        vcgycj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="preid != null" >
+        #{preid,jdbcType=INTEGER},
+      </if>
+      <if test="icaseid != null" >
+        #{icaseid,jdbcType=INTEGER},
+      </if>
+      <if test="vctype != null" >
+        #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        #{ismuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="bdel != null" >
+        #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdrugname != null" >
+        #{vcdrugname,jdbcType=VARCHAR},
+      </if>
+      <if test="vczjl != null" >
+        #{vczjl,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdw != null" >
+        #{vcdw,jdbcType=VARCHAR},
+      </if>
+      <if test="vcgycj != null" >
+        #{vcgycj,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.Pretreatment" >
+    update pretreatment
+    <set >
+      <if test="icaseid != null" >
+        icaseid = #{icaseid,jdbcType=INTEGER},
+      </if>
+      <if test="vctype != null" >
+        vctype = #{vctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismuserid != null" >
+        ismuserid = #{ismuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="bdel != null" >
+        bdel = #{bdel,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdrugname != null" >
+        vcdrugname = #{vcdrugname,jdbcType=VARCHAR},
+      </if>
+      <if test="vczjl != null" >
+        vczjl = #{vczjl,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdw != null" >
+        vcdw = #{vcdw,jdbcType=VARCHAR},
+      </if>
+      <if test="vcgycj != null" >
+        vcgycj = #{vcgycj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where preid = #{preid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.Pretreatment" >
+    update pretreatment
+    set icaseid = #{icaseid,jdbcType=INTEGER},
+      vctype = #{vctype,jdbcType=VARCHAR},
+      ismuserid = #{ismuserid,jdbcType=VARCHAR},
+      bdel = #{bdel,jdbcType=VARCHAR},
+      vcdrugname = #{vcdrugname,jdbcType=VARCHAR},
+      vczjl = #{vczjl,jdbcType=VARCHAR},
+      vcdw = #{vcdw,jdbcType=VARCHAR},
+      vcgycj = #{vcgycj,jdbcType=VARCHAR}
+    where preid = #{preid,jdbcType=INTEGER}
+  </update>
+</mapper>
