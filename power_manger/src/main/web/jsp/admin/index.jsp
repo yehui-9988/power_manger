@@ -17,20 +17,35 @@
 
 
     <style>
+        .el-tabs__header{
+
+            height: 25px;
+
+        }
+
         .el-header {
             background-color: #545c64;
             color: #fbfbfb;
-            line-height: 40px;
-            height: 20px;
+            line-height: 50px;
+
+
 
         }
 
         .el-aside {
-            color: #333;
+            background-color: #545c64;
+
+
 
         }
         .el-main{
             padding: 10px;
+            background-color:#eaedf1;
+
+        }
+        .el-menu{
+            background-color: #545c64;
+
         }
         iframe{
             width: 100%;
@@ -47,41 +62,48 @@
 <div id="app">
 
 
-<el-container style="height: 100%; border: 1px solid #eee ;">
-    <el-aside width="200px" style=": rgb(238, 241, 246)">
-        <el-menu :default-openeds="['0']">
-            <el-submenu v-for="(item,index) in menus" :index="index+''" :key="item.menuId">
-                <template slot="title">
-                    <i :class="item.menuIco"></i>{{item.menuTitle}}
-                </template>
+<el-container style="height: 100%">
+    <el-header style="text-align: right; font-size: 12px;height: 50px">
 
-                    <el-menu-item  v-for="(m,i) in item.list" :key="m.menuId" :index="index+'-'+i"  @click="addTab(m.menuTitle,m.menuTitle,m.menuLink)">
-                    <template slot="title">
-                        <i :class="m.menuIco"></i>{{m.menuTitle}}
-                    </template>
-                   </el-menu-item>
+        <el-dropdown style="color: #fbfbfb;font-size: 16px">
+            <i class="el-icon-setting" style="margin-right: 10px"></i>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="addTab(modifypasswrodtitle,modifypasswrodname,modifypasswrodlink)">修改密码</el-dropdown-item>
+                <el-dropdown-item @click.native="loginexit()"><a href="http://localhost:8080/util/login">注销账号</a></el-dropdown-item>
 
+            </el-dropdown-menu>
+        </el-dropdown>
+        <span style="font-size: 15px">${sessionScope.manager.managerName}</span>
+    </el-header>
 
-            </el-submenu>
-        </el-menu>
-    </el-aside>
 
 
     <el-container>
 
-        <el-header style="text-align: right; font-size: 12px;height: 40px">
-            <el-dropdown style="color: #fbfbfb;font-size: 16px">
-                <i class="el-icon-setting" style="margin-right: 10px"></i>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="addTab(modifypasswrodtitle,modifypasswrodname,modifypasswrodlink)">修改密码</el-dropdown-item>
-                    <el-dropdown-item @click.native="loginexit()"><a href="http://localhost:8080/util/login">注销</a></el-dropdown-item>
+        <el-aside width="200px" >
+            <el-menu default-active="2"
+                     active-text-color="#40AFFE"
+                     background-color="#545c64"
+                     text-color="#fff"
+                     >
+                <el-submenu v-for="(item,index) in menus" :index="index+''" :key="item.menuId">
+                    <template slot="title" >
+                        <i :class="item.menuIco"></i><span style="font-size: 14px;font-family: 'Arial Black';color: #fbfbfb" >{{item.menuTitle}}</span>
+                    </template>
 
-                </el-dropdown-menu>
-            </el-dropdown>
-            <span style="font-size: 14px">${sessionScope.manager.managerName}</span>
-        </el-header>
+                    <el-menu-item  v-for="(m,i) in item.list" :key="m.menuId" :index="index+'-'+i"  @click="addTab(m.menuTitle,m.menuTitle,m.menuLink)"
+                    >
+                        <template slot="title">
+                            <i :class="m.menuIco" ></i><span style="font-size: 14px;font-family: 'Arial Black';color: #fbfbfb"  >{{m.menuTitle}}</span>
+                        </template>
+                    </el-menu-item>
 
-        <el-main>
+
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+
+        <el-main style="margin-top:0px;" >
             <%--<div style="margin-bottom: 20px;">--%>
                 <%--<el-button--%>
                         <%--size="small"--%>
@@ -96,8 +118,10 @@
                         :key="item.name"
                         :label="item.title"
                         :name="item.name"
+
+
                 >
-                    <iframe :src="item.src"> </iframe>
+                    <iframe :src="item.src" scrolling="no" style="height: 700px"> </iframe>
                 </el-tab-pane>
             </el-tabs>
         </el-main>

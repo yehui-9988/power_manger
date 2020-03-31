@@ -27,7 +27,10 @@
 <body >
 <div id="app">
     <!--打开编辑 核对数据的选项卡 -->
-    <el-dialog title="信息核对" :visible.sync="dialogsjgl" width="80%" height="500px">
+    <el-dialog title="信息核对" :visible.sync="dialogsjgl"
+               width="80%" height="500px"
+               @close="getdata()"
+   >
         <template>
             <div>
                 <el-row>
@@ -46,21 +49,12 @@
 
 
         </template>
-            <el-row :gutter="3">
-
-                <el-col :span="8" :offset="6">
-                    <el-button type="primary" >确认提交</el-button>
-                </el-col>
-
-                <el-col :span="8" >
+      <%--  ///下一步的按钮 可有可无--%>
+               <%-- <el-col :span="8" >
                     <el-button type="primary"  @click="changetab">{{labelbutton}}<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-                </el-col>
-
-            </el-row>
-
-
+                </el-col>--%>
     </el-dialog>
-    <div style="margin-bottom: 10px;margin-top: 10px" >
+    <div style="margin-bottom:5px;margin-top:5px" >
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-button-group>
@@ -77,7 +71,9 @@
             ref="tb1"
             border
             :default-sort = "{prop: 'managerId', order: 'descending'}"
-            style="width:100%;">
+            style="width:100%;"
+            :row-style="{height:'0px'}"
+            :cell-style="{padding:'0px'}">
         <el-table-column
                 type="selection"
                 width="55"
@@ -109,12 +105,12 @@
         <el-table-column
                 prop="vcphone"
                 label="电话号码"
-                width="200">
+                width="150">
         </el-table-column>
         <el-table-column
                 prop="vcserialnum"
                 label="患者入组编号"
-                width="120">
+                width="200">
         </el-table-column>
         <el-table-column
                 prop="vcidentity"
@@ -139,13 +135,25 @@
             <template slot-scope="scope">
 
                 <el-button @click="selectrow(scope.row)" type="success" size="small">编辑</el-button>
-                <el-button @click="" type="danger" size="small">删除</el-button>
+                <el-button @click="deleterow(scope.row)" type="danger" size="small">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
 
-</template>
 
+
+</template>
+    <el-pagination
+            background
+            layout=" prev, pager, next,sizes ,jumper"
+            :total="page.total"
+            :page-size="page.size"
+            :page-sizes="[1, 5, 10]"
+            @current-change="changepage"
+            @size-change="handleSizeChange"
+
+    >
+    </el-pagination>
 
 </div>
 
@@ -155,6 +163,12 @@
         data: function () {
             return {
                 icasehistoryid:'',
+                maxid:'',
+                page: {
+                    total: 20,
+                    index: 1,
+                    size: 10
+                },
                 labelbutton:'下一步',
                 list:[],
                 editableTabsValue: '1',
@@ -164,13 +178,13 @@
                     name: '1',
                     src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
                 }, {
-                    title: '病史和生命体征',
+                    title: '疾病历史',
                     name: '2',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/smtz.jsp?id='
+                    src:'<%=basePath%>jsp/hgmx/cwjb/jbls.jsp?id='
                 },{
-                    title: '研究前用药',
+                    title: '生命体征',
                     name: '3',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
+                    src:'<%=basePath%>jsp/hgmx/cwjb/smtz.jsp?id='
                 },{
                     title: '临床诊断',
                     name: '4',
@@ -186,7 +200,7 @@
                 },{
                     title: '医生处方记录',
                     name: '7',
-                    src:''
+                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
                 },
                     ],
                 dialogsjgl:false,
@@ -205,15 +219,73 @@
 
         },
         methods: {
+
+            //删除病历
+              deletesuccess(id){
+                  var self=this;
+                 var data={
+                      "id":id
+                  }
+                  axios.get("<%=basePath%>admin/casehistory/deletecasehistory",{params:data})
+                      .then(function (response) {
+                          if (response.data.code == '10000') {
+                              self.$message({
+                                  type: 'success',
+                                  message: '删除成功!'
+
+                              });
+                              self.getdata();
+                          }
+
+                      }).catch(function (error) {
+
+                  });
+
+              },
+            deleterow(row){
+                   this.$confirm('此操作将永久删除数据, 是否继续?', '提示', {
+                       confirmButtonText: '确定',
+                       cancelButtonText: '取消',
+                       type: 'warning',
+                       center: true
+                   }).then(() => {
+                       this.deletesuccess(row.icasehistoryid)
+
+                   }).catch(() => {
+                       this.$message({
+                           type: 'info',
+                           message: '已取消删除'
+                       });
+                   });
+
+            },
+
+            //分页
+            changepage: function (page1) {
+                console.log(page1)
+                this.page.index = page1;
+                this.getdata()
+
+            },
+            handleSizeChange: function (val) {
+                this.page.size = val;
+                console.log("pagesize"+ this.page.size)
+                this.getdata();
+            },
             //获取表格数据
             getdata: function () {
 
                 var self = this;
-                axios.get("<%=basePath%>admin/casehistory/selectall")
+                var data = {
+                    'index': self.page.index,
+                    'size': self.page.size
+                }
+                axios.get("<%=basePath%>admin/casehistory/selectall",{params:data})
                     .then(function (response) {
 
                         if (response.data.code == '10000') {
-                            self.list = response.data.object;
+                            self.list = response.data.object.list;
+                            self.page.total = response.data.object.total;
                         }
 
                     }).catch(function (error) {
@@ -236,11 +308,27 @@
             handleclick(tab,event){
                 this.editableTabsValue=tab.name;
 
+
             },
-            savejxsj(){
-                this.dialogsjgl=true;
-                console.log(this.$refs.formhdsj);
+            //打开新的表格
+            savejxsj() {
+                this.dialogsjgl = true;
+                var self = this;
+                axios.get("<%=basePath%>admin/casehistory/selectmaxid")
+                    .then(function (response) {
+
+                        if (response.data.code == '10000') {
+                            self.icasehistoryid =response.data.object+1;
+
+                        }
+
+                    }).catch(function (error) {
+
+                });
             },
+
+
+
             selectrow(row)
             {
                 this.dialogsjgl=true;

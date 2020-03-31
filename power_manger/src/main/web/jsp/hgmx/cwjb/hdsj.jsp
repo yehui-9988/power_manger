@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
 
 
 </head>
@@ -128,6 +128,18 @@
          </el-form>
 
 
+
+         <el-row :gutter="gutter">
+             <el-col :span="12" :offset="11">
+                 <el-button type="primary" @click="onSubmit()">确认保存</el-button>
+             </el-col>
+
+         </el-row>
+
+
+
+
+
      </div>
 
 
@@ -138,59 +150,85 @@
      new Vue({
          el: '#app',
          data() {
-                 return {
-                     labelPosition: 'right',
-                     form: {
-
-                     },
-                     spansize:7,//占栏数
-                     offset:5,//分栏偏移数
-                     gutter:1,//间隔数
-
-
-
-
-
-
-
-                 }
-             },
-         created:function(){
-             this.loaddata();
-         },
-             methods: {
-             ///加载表单数据
-                 loaddata()
-                 {
-                     var self=this;
-                     var data={
-                        'id':<%=id%>
-                     }
-                     axios.get("<%=basePath%>admin/casehistory/selectbyid", {
-                         params: data
-                     }).then(function (response) {
-                         self.form=response.data.object;
-                         console.log(self.from.vcphone);
-                     }).catch(function (error) {
-                         console.log(error);
-                     });
-                 },
-                 onSubmit() {
-                     console.log('submit!');
-
-                 },
-                 //单点按钮，执行到下一个tab
-                 changetab(){
-                     console.log(<%=id%>)
-                 },
+             return {
+                 labelPosition: 'right',
+                 form: {},
+                 spansize: 7,//占栏数
+                 offset: 5,//分栏偏移数
+                 gutter: 1,//间隔数
+                 id: <%=id%>,
+                 maxid:'',
 
 
              }
+         },
+         created: function () {
+             this.loaddata();
+
+         },
+         methods: {
+
+             ///加载表单数据
+
+             loaddata() {
+                 var self=this;
+                 let maxid;
+                 axios.get("<%=basePath%>admin/casehistory/selectmaxid")
+                     .then(function (response) {
+
+                         if (response.data.code == '10000') {
+                             maxid =response.data.object;//获取当前最大值
+                             if (parseInt(self.id)<=maxid) {
+
+                                 var data = {
+                                     'id': self.id
+                                 }
+                                 axios.get("<%=basePath%>admin/casehistory/selectbyid", {
+                                     params: data
+                                 }).then(function (response) {
+                                     self.form = response.data.object;
+
+                                 }).catch(function (error) {
+                                     console.log(error);
+                                 });
+                             } else {
+                                 // this.form = {};
+                             }
+                         }
+
+                     }).catch(function (error) {
+
+                 });
 
 
-     });
 
 
+             },
+             onSubmit() {
+                 var self = this;
+                 self.form.vctype = 3;
+                 var casehistory = self.form;
+                 axios.post("<%=basePath%>admin/casehistory/savecasehistory", Qs.stringify(casehistory))
+                     .then(function (response) {
+                         if (response.data.code == 10000) {
+                             self.$message({
+                                 type: 'success',
+                                 message: "保存成功!"
+                             });
+                             self.loaddata();
+                         }
+
+
+                     });
+                 //单点按钮，执行到下一个tab
+
+
+             },
+
+
+         }
+
+     })
  </script>
 
 
