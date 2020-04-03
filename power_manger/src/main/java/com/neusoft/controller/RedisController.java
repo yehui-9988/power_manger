@@ -4,6 +4,7 @@ package com.neusoft.controller;
 import com.neusoft.bean.Manger;
 import com.neusoft.dao.MangerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.jredis.JredisConnection;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;

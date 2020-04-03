@@ -64,10 +64,10 @@
         <el-row :gutter="gutter">
             <div>
             <el-col :span="4" :offset="6">
-                    <el-radio v-model="radio1" label="1"  >已检查</el-radio>
+                    <el-radio v-model="form.bdel" label="0" >已检查</el-radio>
             </el-col>
             <el-col :span="4" :offset="1">
-                <el-radio v-model="radio1" label="2"  >未检查</el-radio>
+                <el-radio v-model="form.bdel" label="1"  >未检查</el-radio>
             </el-col>
             </div>
         </el-row>
@@ -79,12 +79,11 @@
     <el-row :gutter="gutter" style="margin-top: 20px">
 
         <el-col :span="spansize" :offset="6">
-            <el-button type="success">确认保存</el-button>
-
+            <el-button type="success" @click="savedata">确认保存</el-button>
         </el-col>
 
         <el-col :span="spansize" >
-            <el-button type="info">修改数据 </el-button>
+            <el-button type="info" @click="modify">修改数据 </el-button>
         </el-col>
     </el-row>
 
@@ -101,27 +100,26 @@
                 gutter: 1,//间隔数
                 id:<%=id%>,
                 form:{
-                    "vchigh":180,
-                    "vcweight":180,
-                    "vcssy":180,
-                    "vcszy":180,
-
                 },
                 offset:4,
-                radio1: '1',
+                radio1: '0',
+                maxid:1,
 
             }
         },
-        created()
+        created: function ()
         {
             this.getdata();
 
         },
-        method:{
+        methods:{
+
             getdata()
             {
                 var self=this;
-                let maxid;
+                self.istrue=true;
+
+                console.log("触发时间")
                 axios.get("<%=basePath%>admin/casehistory/selectmaxid")
                     .then(function (response) {
                         if (response.data.code == '10000') {
@@ -134,6 +132,7 @@
                                     params: data
                                 }).then(function (response) {
                                     self.form = response.data.object;
+                                    this.istrue=false;
 
                                 }).catch(function (error) {
                                     console.log(error);
@@ -147,16 +146,31 @@
             //提交数据
             savedata()
             {
-                var data=this.form;
+                var vitalsigns=this.form;
                 var self=this;
                 axios.get("<%=basePath%>admin/smtz/save", {
-                    params: data
+                    params: vitalsigns
                 }).then(function (response) {
-                    self.form = response.data.object;
+                    if (response.data.code == '10000') {
+                        self.$message({
+                            type: 'success',
+                            message: '保存成功!'
+
+                        });
+                    }
+                    self.getdata();
+                    self.istrue=true;
 
                 }).catch(function (error) {
                     console.log(error);
                 });
+
+            },
+            modify()
+            {
+                this.istrue=false;
+
+
             }
 
         }
