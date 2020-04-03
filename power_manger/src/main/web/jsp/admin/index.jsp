@@ -24,7 +24,8 @@
         }
 
         .el-header {
-            background-color: #545c64;
+            background-color:#20222A;
+                /*    #545c64;*/
             color: #fbfbfb;
             line-height: 50px;
 
@@ -33,7 +34,7 @@
         }
 
         .el-aside {
-            background-color: #545c64;
+            background-color:#20222A ;
 
 
 
@@ -44,7 +45,7 @@
 
         }
         .el-menu{
-            background-color: #545c64;
+            background-color: #20222A;
 
         }
         iframe{
@@ -83,7 +84,7 @@
         <el-aside width="200px" >
             <el-menu default-active="2"
                      active-text-color="#40AFFE"
-                     background-color="#545c64"
+                     background-color="#20222A"
                      text-color="#fff"
                      >
                 <el-submenu v-for="(item,index) in menus" :index="index+''" :key="item.menuId">

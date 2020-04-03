@@ -36,12 +36,21 @@ public class SmtzController {
     @ResponseBody
     public Object selectbyid(Vitalsigns vitalsigns){
 
-        int result=vmapper.insertSelective(vitalsigns);
+        int result;
+        if (vitalsigns.getIvitalsignsid()==null)
+        {
+            result=vmapper.insertSelective(vitalsigns);
+        }
+        else {
+            result=vmapper.updateByPrimaryKey(vitalsigns);
+        }
+
+
         if (result!=0)
         {
             bean=new ResultBean();
             bean.setCode(10000);
-            bean.setObject(vitalsigns);
+
 
         }
         return bean;
