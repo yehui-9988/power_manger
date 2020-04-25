@@ -35,7 +35,6 @@ public class Dateuntil {
 
          if (!list.get(0).equals(gg))
          {
-
              list.set(0, gg);
              ls=10000;
          }

@@ -107,8 +107,6 @@
        created:function(){
           this.readMasterUser();
           this.clearall();
-
-
        },
        methods: {
            loadtabeldata(){
