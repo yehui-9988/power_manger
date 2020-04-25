@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.BinaryClient;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,6 @@ public class CasehistoryController {
         index = index == null ? 1 : index;
         size = size == null ? 5 : size;
         try {
-
             PageHelper.startPage(index, size);
             List<Casehistory> list = mapper.selectall();
             PageInfo<Casehistory> info = new PageInfo<>(list);
@@ -104,8 +104,6 @@ public class CasehistoryController {
        }
 
 
-
-
         if(result>0)
         {
             bean=new ResultBean();
@@ -156,6 +154,7 @@ public class CasehistoryController {
         List<Map<String,Integer>> list=mapper.selectmaxicaeid();
         Map<String,Integer> map=list.get(0);
         Integer maxid=map.get("maxid");
+
         bean=new ResultBean();
         bean.setCode(10000);
         bean.setMessage("获取当前最大id");

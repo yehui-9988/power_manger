@@ -313,7 +313,9 @@
             //打开新的表格
             savejxsj() {
                 this.dialogsjgl = true;
+
                 var self = this;
+                self.editableTabsValue=1+'';
                 axios.get("<%=basePath%>admin/casehistory/selectmaxid")
                     .then(function (response) {
 
@@ -326,12 +328,11 @@
 
                 });
             },
-
-
-
+            //选择数据git config --global user.name“叶辉”
             selectrow(row)
             {
                 this.dialogsjgl=true;
+                this.editableTabsValue=1+'';
                 this.icasehistoryid=row.icasehistoryid;
                 console.log(this.icasehistoryid)
             }

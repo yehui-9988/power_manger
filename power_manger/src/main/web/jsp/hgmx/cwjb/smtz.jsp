@@ -148,6 +148,10 @@
             {
                 var vitalsigns=this.form;
                 var self=this;
+                if (vitalsigns.icaseid==null)
+                {
+                    vitalsigns.icaseid=self.id;
+                }
                 axios.get("<%=basePath%>admin/smtz/save", {
                     params: vitalsigns
                 }).then(function (response) {
@@ -169,8 +173,6 @@
             modify()
             {
                 this.istrue=false;
-
-
             }
 
         }

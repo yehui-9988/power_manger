@@ -21,4 +21,6 @@ public interface MangerMapper {
 
     List<Manger> selectall(Map map);
     List<Manger> loginselect(Map map);
+    Manger selectrole(Integer managerId);
+
 }

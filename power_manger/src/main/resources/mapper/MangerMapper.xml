@@ -34,6 +34,14 @@
     where manager_phone=#{username}and manager_password=#{password}
   </select>
 
+  <select id="selectrole" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+         SELECT p.*,ro.* from power_manager p
+    LEFT JOIN power_manger_role_rf rf on p.manager_id=rf.rf_mangerid
+    LEFT JOIN power_role ro on rf.rf_roleid=ro.role_id
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </select>
+
+
   <select id="selectall" parameterType="map" resultMap="BaseResultMap">
     SELECT p.*,ro.* from power_manager p
     LEFT JOIN power_manger_role_rf rf on p.manager_id=rf.rf_mangerid
