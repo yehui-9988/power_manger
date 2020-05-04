@@ -2,6 +2,8 @@ package com.neusoft.dao;
 
 import com.neusoft.bean.Pretreatment;
 
+import java.util.List;
+
 public interface PretreatmentMapper {
     int deleteByPrimaryKey(Integer preid);
 
@@ -14,4 +16,5 @@ public interface PretreatmentMapper {
     int updateByPrimaryKeySelective(Pretreatment record);
 
     int updateByPrimaryKey(Pretreatment record);
+    List<Pretreatment> selectByicaseid(int icaseid);
 }

@@ -31,7 +31,7 @@
 					<div class='icon'>
 						<img alt="" src='<%=basePath%>static/login/img/user_icon_copy.png'>
 					</div>
-					<input name="username" id="username" dplaceholder='请输入手机号码' maxlength="16" type='text' autocomplete="off" value="15879900515" />
+					<input name="username" id="username" dplaceholder='请输入手机号码' maxlength="16" type='text' autocomplete="off" value="15879900514" />
 					<div class='validation'>
 						<img alt="" src='<%=basePath%>static/login/img/tick.png'>
 					</div>
@@ -186,7 +186,7 @@
 							success:function (data) {
 								if (data.code=='10000')
 								{
-								    window.location.replace("http://localhost:8080/test")
+								    window.location.replace("<%=basePath%>test")
 								}
 								else
 								{

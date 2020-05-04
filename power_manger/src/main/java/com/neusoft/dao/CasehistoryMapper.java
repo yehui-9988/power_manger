@@ -19,5 +19,5 @@ public interface CasehistoryMapper {
     int updateByPrimaryKey(Casehistory record);
 
      List<Casehistory> selectall();
-    List<Map<String,Integer>> selectmaxicaeid ();
+     List<Map<String,Integer>> selectmaxicaeid ();
 }

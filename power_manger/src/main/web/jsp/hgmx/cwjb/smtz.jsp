@@ -103,7 +103,7 @@
                 },
                 offset:4,
                 radio1: '0',
-                maxid:1,
+
 
             }
         },
@@ -117,30 +117,18 @@
             getdata()
             {
                 var self=this;
-                self.istrue=true;
+                var data={'id':self.id}
+                axios.get("<%=basePath%>admin/smtz/select", {
+                    params: data
+                }).then(function (response) {
+                    self.form = response.data.object;
+                    self.istrue=true;
 
-                console.log("触发时间")
-                axios.get("<%=basePath%>admin/casehistory/selectmaxid")
-                    .then(function (response) {
-                        if (response.data.code == '10000') {
-                            maxid = response.data.object;//获取当前最大值
-                            if (parseInt(self.id) <= maxid) {
-                                var data={
-                                    "id":self.id
-                                }
-                                axios.get("<%=basePath%>admin/smtz/select", {
-                                    params: data
-                                }).then(function (response) {
-                                    self.form = response.data.object;
-                                    this.istrue=false;
+                }).catch(function (error) {
+                    console.log(error);
+                });
 
-                                }).catch(function (error) {
-                                    console.log(error);
-                                });
 
-                            }
-                        }
-                    });
 
             },
             //提交数据

@@ -5,16 +5,22 @@
     <id column="preid" property="preid" jdbcType="INTEGER" />
     <result column="icaseid" property="icaseid" jdbcType="INTEGER" />
     <result column="vctype" property="vctype" jdbcType="VARCHAR" />
-    <result column="ismuserid" property="ismuserid" jdbcType="VARCHAR" />
-    <result column="bdel" property="bdel" jdbcType="VARCHAR" />
     <result column="vcdrugname" property="vcdrugname" jdbcType="VARCHAR" />
     <result column="vczjl" property="vczjl" jdbcType="VARCHAR" />
-    <result column="vcdw" property="vcdw" jdbcType="VARCHAR" />
     <result column="vcgycj" property="vcgycj" jdbcType="VARCHAR" />
+    <result column="begintime" property="begintime" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
+    <result column="vccontent" property="vccontent" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    preid, icaseid, vctype, ismuserid, bdel, vcdrugname, vczjl, vcdw, vcgycj
+    preid, icaseid, vctype, vcdrugname, vczjl, vcgycj, begintime, endtime, vccontent
   </sql>
+  <select id="selectByicaseid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pretreatment
+    where icaseid = #{icaseid,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -27,12 +33,12 @@
   </delete>
   <insert id="insert" parameterType="com.neusoft.bean.Pretreatment" >
     insert into pretreatment (preid, icaseid, vctype, 
-      ismuserid, bdel, vcdrugname, 
-      vczjl, vcdw, vcgycj
+      vcdrugname, vczjl, vcgycj, 
+      begintime, endtime, vccontent
       )
     values (#{preid,jdbcType=INTEGER}, #{icaseid,jdbcType=INTEGER}, #{vctype,jdbcType=VARCHAR}, 
-      #{ismuserid,jdbcType=VARCHAR}, #{bdel,jdbcType=VARCHAR}, #{vcdrugname,jdbcType=VARCHAR}, 
-      #{vczjl,jdbcType=VARCHAR}, #{vcdw,jdbcType=VARCHAR}, #{vcgycj,jdbcType=VARCHAR}
+      #{vcdrugname,jdbcType=VARCHAR}, #{vczjl,jdbcType=VARCHAR}, #{vcgycj,jdbcType=VARCHAR}, 
+      #{begintime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, #{vccontent,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.neusoft.bean.Pretreatment" >
@@ -47,23 +53,23 @@
       <if test="vctype != null" >
         vctype,
       </if>
-      <if test="ismuserid != null" >
-        ismuserid,
-      </if>
-      <if test="bdel != null" >
-        bdel,
-      </if>
       <if test="vcdrugname != null" >
         vcdrugname,
       </if>
       <if test="vczjl != null" >
         vczjl,
       </if>
-      <if test="vcdw != null" >
-        vcdw,
-      </if>
       <if test="vcgycj != null" >
         vcgycj,
+      </if>
+      <if test="begintime != null" >
+        begintime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="vccontent != null" >
+        vccontent,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -76,23 +82,23 @@
       <if test="vctype != null" >
         #{vctype,jdbcType=VARCHAR},
       </if>
-      <if test="ismuserid != null" >
-        #{ismuserid,jdbcType=VARCHAR},
-      </if>
-      <if test="bdel != null" >
-        #{bdel,jdbcType=VARCHAR},
-      </if>
       <if test="vcdrugname != null" >
         #{vcdrugname,jdbcType=VARCHAR},
       </if>
       <if test="vczjl != null" >
         #{vczjl,jdbcType=VARCHAR},
       </if>
-      <if test="vcdw != null" >
-        #{vcdw,jdbcType=VARCHAR},
-      </if>
       <if test="vcgycj != null" >
         #{vcgycj,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="vccontent != null" >
+        #{vccontent,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -105,23 +111,23 @@
       <if test="vctype != null" >
         vctype = #{vctype,jdbcType=VARCHAR},
       </if>
-      <if test="ismuserid != null" >
-        ismuserid = #{ismuserid,jdbcType=VARCHAR},
-      </if>
-      <if test="bdel != null" >
-        bdel = #{bdel,jdbcType=VARCHAR},
-      </if>
       <if test="vcdrugname != null" >
         vcdrugname = #{vcdrugname,jdbcType=VARCHAR},
       </if>
       <if test="vczjl != null" >
         vczjl = #{vczjl,jdbcType=VARCHAR},
       </if>
-      <if test="vcdw != null" >
-        vcdw = #{vcdw,jdbcType=VARCHAR},
-      </if>
       <if test="vcgycj != null" >
         vcgycj = #{vcgycj,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        begintime = #{begintime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="vccontent != null" >
+        vccontent = #{vccontent,jdbcType=VARCHAR},
       </if>
     </set>
     where preid = #{preid,jdbcType=INTEGER}
@@ -130,12 +136,12 @@
     update pretreatment
     set icaseid = #{icaseid,jdbcType=INTEGER},
       vctype = #{vctype,jdbcType=VARCHAR},
-      ismuserid = #{ismuserid,jdbcType=VARCHAR},
-      bdel = #{bdel,jdbcType=VARCHAR},
       vcdrugname = #{vcdrugname,jdbcType=VARCHAR},
       vczjl = #{vczjl,jdbcType=VARCHAR},
-      vcdw = #{vcdw,jdbcType=VARCHAR},
-      vcgycj = #{vcgycj,jdbcType=VARCHAR}
+      vcgycj = #{vcgycj,jdbcType=VARCHAR},
+      begintime = #{begintime,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=VARCHAR},
+      vccontent = #{vccontent,jdbcType=VARCHAR}
     where preid = #{preid,jdbcType=INTEGER}
   </update>
 </mapper>

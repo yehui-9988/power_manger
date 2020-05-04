@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.BinaryClient;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +24,9 @@ public class CasehistoryController {
     private CasehistoryMapper mapper;
     @Autowired
     private PasthistoryMapper pamapper;
+
+
+
     ResultBean bean;
 
     @RequestMapping("selectall")
@@ -73,9 +74,6 @@ public class CasehistoryController {
     @RequestMapping("savepasthistory")
     @ResponseBody
     public Object saverow(Pasthistory pasthistory){
-
-
-
        int result= pamapper.insertSelective(pasthistory);
 
         if (result>0)
@@ -87,6 +85,10 @@ public class CasehistoryController {
         }
         return bean;
     }
+
+
+
+
     @RequestMapping("savecasehistory")
     @ResponseBody
     public Object savecasehistory(Casehistory casehistory, HttpSession session)
@@ -160,10 +162,7 @@ public class CasehistoryController {
         bean.setMessage("获取当前最大id");
         bean.setObject(maxid);
 
-
-
         return bean;
-
     }
 
 

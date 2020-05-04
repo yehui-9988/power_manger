@@ -14,6 +14,7 @@ import com.neusoft.until.ResultBean;
 import com.neusoft.until.poi.PoiUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,6 +89,9 @@ public class Mangercontroller {
         Integer rows=0;
 
         try {
+
+            Manger manger=mapper.selectByPrimaryKey(id);
+            redisTemplate.delete(manger.getManagerPhone()); //删除缓存
             rows=  mapper.deleteByPrimaryKey(id);
             if (rows>0)
             {
@@ -118,10 +122,13 @@ public class Mangercontroller {
         List<Integer>list=new ArrayList<>();
         for (String id: str
              ) {
+
               list.add(Integer.valueOf(id));
+              Manger manger= mapper.selectByPrimaryKey(Integer.valueOf(id));
+              redisTemplate.delete(manger.getManagerPhone());//删除缓存
         }
 //        String[] idsx=ids.split("[,]");
-      
+
         try {
 
 
@@ -206,7 +213,12 @@ public class Mangercontroller {
                 List<Manger> list=PoiUtil.importExcel(file, 0, 1, Manger.class);
                 for (Manger m:list
                      ) {
-                      rows=mapper.insertSelective(m);
+                      m.setManagerPassword("000000");
+                      m.setManagerCreatetime(new Date());
+                      mapper.insertSelective(m);
+                      Manger m2=mapper.selectrole(m.getManagerId());
+                      redisTemplate.opsForValue().set(m2.getManagerPhone(),m2);
+
                       rows++;
                 }
                 if (rows==list.size())
@@ -254,9 +266,9 @@ public class Mangercontroller {
             }
             if (rows>0)
             {
-                //修改账号密码后 写入redis缓存；
-//                manger=mapper.selectByPrimaryKey(manger.getManagerId());
-                redisTemplate.opsForValue().set(manger.getManagerPhone(),manger );
+
+                Manger m=mapper.selectrole(manger.getManagerId());
+                redisTemplate.opsForValue().set(m.getManagerPhone(),m);
                 bean=new ResultBean(10000);
 
             }
@@ -285,6 +297,10 @@ public class Mangercontroller {
         {
             manger.setManagerPassword(newpwd);
             rows=mapper.updateByPrimaryKeySelective(manger);
+
+            Manger m=mapper.selectrole(manger.getManagerId());
+            redisTemplate.opsForValue().set(m.getManagerPhone(),m);
+
             if (rows>0)
             {
                 bean=new ResultBean(10000);
@@ -338,6 +354,12 @@ public class Mangercontroller {
 
         if (rows>0)
         {
+            Manger manger= mapper.selectByPrimaryKey(manageid);
+            HashMap<String,String> map=new HashMap<>();
+            map.put("phone",manger.getManagerPhone());
+            List<Manger> list1=mapper.selectall(map);
+            redisTemplate.opsForValue().set(list1.get(0).getManagerPhone(),list1.get(0));
+
             bean=new ResultBean(10000);
 
         }

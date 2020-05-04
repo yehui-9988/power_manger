@@ -10,7 +10,7 @@ public class Testcontroller{
     public String test()
     {
 
-        System.out.println("testgit");
+        System.out.println("test_git");
         return "admin/index";
 
     }

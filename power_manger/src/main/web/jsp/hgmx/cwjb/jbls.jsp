@@ -40,10 +40,14 @@
 
 </style>
 <div id="app">
+    <el-row style="margin-top: 2px">
+        <el-col :span="3">
+            <el-button type="success"  round size="small" @click="addMasterUser()" style="margin-bottom:3px;margin-top: 3px">添加数据</el-button>
+        </el-col>
+    </el-row>
     <el-row>
 
         <el-col :span="24">
-            <el-divider content-position="center">合并疾病/既往病历史</el-divider>
             <el-table size="mini" :data="master_user.data" empty-text="暂无合并疾病" border style="width: 100%;"highlight-current-row>
                 <el-table-column type="index" label="序号"></el-table-column>
 
@@ -72,11 +76,7 @@
         </el-col>
 
     </el-row>
-    <el-row>
-        <el-col :span="24">
-            <div class="el-table-add-row" style="width: 99.2%;" @click="addMasterUser()"><span>+ 添加</span></div>
-        </el-col>
-    </el-row>
+
 
 </div>
 
@@ -136,10 +136,6 @@
            },
            //添加账号
            addMasterUser() {
-               // for (let i of this.master_user.data) {
-               //     if (i.isSet)
-               //     return this.$message.warning("请先保存当前编辑项");
-               // }
                let j = { id: 0, vcdiseasename: "",bdel:0,icaseid:<%=id%>,vctype:3, dtfind: "",  isSet: true};
                this.master_user.data.push(j);
                this.master_user.sel = j
@@ -164,9 +160,7 @@
                                    message: "保存成功!"
                                });
                                row.isSet=false;
-
                                self.loadtabeldata();
-                               console.log("数据"+self.master_user.data)
                            }
 
                            //然后这边重新读取表格数据

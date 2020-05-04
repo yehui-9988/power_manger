@@ -20,7 +20,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
+
     <style>
+        .el-tabs__header{
+            margin: 0 0 2px;
+        }
 
     </style>
 </head>
@@ -30,6 +36,7 @@
     <el-dialog title="信息核对" :visible.sync="dialogsjgl"
                width="80%" height="500px"
                @close="getdata()"
+               top="0vh"
    >
         <template>
             <div>
@@ -46,20 +53,123 @@
                     </el-tabs>
                 </el-row>
             </div>
-
-
         </template>
-      <%--  ///下一步的按钮 可有可无--%>
-               <%-- <el-col :span="8" >
-                    <el-button type="primary"  @click="changetab">{{labelbutton}}<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-                </el-col>--%>
     </el-dialog>
+    <%--
+    增加新数据弹出dialog
+    --%>
+    <el-dialog title="新增数据" :visible.sync="dialogxzsj"
+               width="80%" height="400px"
+               @close="getdata()"
+               top="10vh"
+    >
+        <div>
+            <el-form :label-position="labelPosition" ref="formhdsj" :model="form"
+                     label-width="100px" size="small"
+            >
+                <el-row :gutter="gutter">
+
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="患者姓名:">
+                            <el-input v-model="form.vcname"  ></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="spansize" >
+                        <el-form-item label="民族：">
+                            <el-input v-model="form.vcnation"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="性别：">
+                            <el-input v-model="form.vcsex"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="spansize">
+                        <el-form-item label="职业：">
+                            <el-input v-model="form.vcoccupation"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="婚姻状况：">
+                            <el-input v-model="form.vcmarry"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="spansize">
+                        <el-form-item label="教育程度：">
+                            <el-input v-model="form.vceducation"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="吸烟情况：">
+                            <el-input v-model="form.vcsmoke"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="spansize">
+                        <el-form-item label="病案号：">
+                            <el-input v-model="form.vcmdrecord"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="入组编号：">
+                            <el-input v-model="form.vcserialnum"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="spansize">
+                        <el-form-item label="身份证号：">
+                            <el-input v-model="form.vcidentity"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="spansize" :offset="offset">
+                        <el-form-item label="手机号码：	">
+                            <el-input v-model="form.vcphone"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="spansize">
+                        <el-form-item label="登记日期：">
+                            <el-input v-model="form.dtregister"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row :gutter="gutter">
+                    <el-col :span="14" :offset="offset">
+                        <el-form-item label="家庭住址：">
+                            <el-input v-model="form.vcaddress"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+            </el-form>
+            <el-row :gutter="gutter">
+                <el-col :span="12" :offset="11">
+                    <el-button type="primary" @click="onSubmit()">确认保存</el-button>
+                </el-col>
+
+            </el-row>
+        </div>
+    </el-dialog>
+
     <div style="margin-bottom:5px;margin-top:5px" >
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-button-group>
-                    <el-button type="primary" icon="el-icon-circle-plus-outline " @click="savejxsj"></el-button>
-                    <el-button type="primary" icon="el-icon-delete" ></el-button>
+                    <el-button type="primary" round size="small" @click="savexzsj">新增数据</el-button>
                 </el-button-group>
             </el-col>
         </el-row>
@@ -72,8 +182,8 @@
             border
             :default-sort = "{prop: 'managerId', order: 'descending'}"
             style="width:100%;"
-            :row-style="{height:'0px'}"
-            :cell-style="{padding:'0px'}">
+            :row-style="{height:'10px'}"
+            :cell-style="{padding:'5px'}">
         <el-table-column
                 type="selection"
                 width="55"
@@ -84,7 +194,7 @@
                 sortable
                 prop="icasehistoryid"
                 label="ID"
-                width="100"
+                width="120"
 
         >
         </el-table-column>
@@ -92,16 +202,16 @@
         <el-table-column
                 prop="vcname"
                 label="患者姓名"
-                width="120">
+                width="150">
         </el-table-column>
-        <el-table-column
+     <%--   <el-table-column
                 label="头像"
                 width="180">
             <template slot-scope="scope">
                 <img  style="height: 50px; width: 150px" :src="'<%=basePath%>'+scope.row.managerImg" onerror="javascript:this.src='<%=basePath%>static/imgs/default.jpg'">
-                <%--scope.row.managerImg--%>
+                &lt;%&ndash;scope.row.managerImg&ndash;%&gt;
             </template>
-        </el-table-column>
+        </el-table-column>--%>
         <el-table-column
                 prop="vcphone"
                 label="电话号码"
@@ -134,8 +244,8 @@
                 width="200">
             <template slot-scope="scope">
 
-                <el-button @click="selectrow(scope.row)" type="success" size="small">编辑</el-button>
-                <el-button @click="deleterow(scope.row)" type="danger" size="small">删除</el-button>
+                <el-button @click="selectrow(scope.row)" type="success" size="mini">编辑</el-button>
+                <el-button @click="deleterow(scope.row)" type="danger" size="mini">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -162,6 +272,11 @@
         el: '#app',
         data: function () {
             return {
+                labelPosition: 'right',
+                form: {},
+                spansize: 7,//占栏数
+                offset: 5,//分栏偏移数
+                gutter: 1,//间隔数
                 icasehistoryid:'',
                 maxid:'',
                 page: {
@@ -186,9 +301,9 @@
                     name: '3',
                     src:'<%=basePath%>jsp/hgmx/cwjb/smtz.jsp?id='
                 },{
-                    title: '临床诊断',
+                    title: '研究前用药',
                     name: '4',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
+                    src:'<%=basePath%>jsp/hgmx/cwjb/yjqyy.jsp?id='
                 },{
                     title: '脾气虚症状',
                     name: '5',
@@ -204,6 +319,7 @@
                 },
                     ],
                 dialogsjgl:false,
+                dialogxzsj:false,
             }
 
         },
@@ -219,6 +335,24 @@
 
         },
         methods: {
+
+            //新增数据
+            onSubmit() {
+                var self = this;
+                self.form.vctype = 3;
+                var casehistory = self.form;
+                axios.post("<%=basePath%>admin/casehistory/savecasehistory", Qs.stringify(casehistory))
+                    .then(function (response) {
+                        if (response.data.code == 10000) {
+                            self.$message({
+                                type: 'success',
+                                message: "保存成功!"
+                            });
+                            self.getdata();
+                            self.dialogxzsj=false;
+                        }
+                    });
+            },
 
             //删除病历
               deletesuccess(id){
@@ -313,7 +447,6 @@
             //打开新的表格
             savejxsj() {
                 this.dialogsjgl = true;
-
                 var self = this;
                 self.editableTabsValue=1+'';
                 axios.get("<%=basePath%>admin/casehistory/selectmaxid")
@@ -335,6 +468,11 @@
                 this.editableTabsValue=1+'';
                 this.icasehistoryid=row.icasehistoryid;
                 console.log(this.icasehistoryid)
+            },
+            savexzsj()
+            {
+                this.dialogxzsj = true;
+                this.form={};
             }
 
         }

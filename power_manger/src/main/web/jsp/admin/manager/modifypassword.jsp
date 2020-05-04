@@ -67,16 +67,17 @@
             modifypassword()
             {
                 var self=this;
-                if (this.formLabelAlign.name!=this.formLabelAlign.type)
+                if (this.formLabelAlign.region!=this.formLabelAlign.type)
                 {
                     self.$message({
                         type: 'error',
                         message: '新密码不一致，请核对!'
                     });
+                    return false;
                 }
                 self.managerId='${sessionScope.manager.managerId}' ;
               // this.manager=manager
-              console.log("修改密码测试"+self.managerId)
+             // console.log("修改密码测试"+self.managerId)
                var data={  id:self.managerId,
                            pwd:this.formLabelAlign.name,
                            newpwd:this.formLabelAlign.type

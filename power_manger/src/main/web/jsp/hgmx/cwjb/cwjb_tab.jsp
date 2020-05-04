@@ -60,6 +60,7 @@
                     },{
                         title: '研究前用药',
                         name: '3',
+                        src:'<%=basePath%>jsp/hgmx/cwjb/yjqyy.jsp'
 
                     },{
                         title: '临床诊断',

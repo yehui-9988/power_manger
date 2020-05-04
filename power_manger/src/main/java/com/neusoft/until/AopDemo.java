@@ -7,6 +7,7 @@ import com.neusoft.bean.SystemMenu;
 import com.neusoft.controller.Mangercontroller;
 import com.neusoft.controller.RoleController;
 import com.neusoft.controller.SystemMenucontroller;
+import com.neusoft.controller.Utilcontroller;
 import com.neusoft.dao.MangerMapper;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.formula.functions.T;
@@ -14,6 +15,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,6 +24,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -33,6 +37,15 @@ public class AopDemo {
     @Autowired
     MangerMapper mangerMapper;
 
+    @Autowired
+    RedisTemplate template;
+
+
+
+
+    Utilcontroller utilcontroller=new Utilcontroller();
+
+
     @Pointcut("execution(public * com.neusoft.controller.*.*(..))")
     public void poincut()
     {
@@ -40,66 +53,94 @@ public class AopDemo {
 
     }
 
-    @Before("poincut()")
+  @Before("poincut()")
     public void before(JoinPoint joinPoint) throws Exception
     {
         Manger manager=(Manger) session.getAttribute(Manger.CURRENT_MANAGER);
-       /* List<Role> list= manager.getRoles();
-        for (Role r:list
-             ) {
-           r.getRoleName();
-        }*/
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
        if (null !=manager) {
            String  classone = joinPoint.getTarget().getClass().getName();
-           if (null==manager.getRolestr())
+           if (null==manager.getRolestr()||manager.getRolestr().equals(""))
            {
+
                session.removeAttribute(Manger.CURRENT_MANAGER);
-               throw  new RuntimeException("没有角色，请联系管理员");
+               try {
+                   throw  new RuntimeException("没有角色，请联系管理员");
+
+               }catch (Exception e)
+               {
+                 utilcontroller.todologin();
+
+               }finally {
+
+
+
+               }
+                 //  session.removeAttribute(Manger.CURRENT_MANAGER);
+
            }
-           HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                   .getRequest();
 
            String url = request.getRequestURI();
            String url2 = url.substring(url.lastIndexOf("/") + 1,
                    url.lastIndexOf("?") == -1 ? url.length() : url.lastIndexOf("?"));
            switch (manager.getRolestr()) {
                case "超级管理员":
-
                    break;
-               case "系统管理员":
+               case "普通管理员":
+                   if (classone.equals(SystemMenucontroller.class.getName())) {
 
-                   if (classone.equals("SystemMenu")) {
-                       throw new RuntimeException("没有权限");
+                       if(joinPoint.getSignature().getName().equals("findbymangerid"))
+                       {
+                           return ;
+
+                       }else {
+                           throw new RuntimeException("没有权限");
+                       }
                    }
                    break;
                default:
-                   if (classone.equals(Mangercontroller.class.getName())||classone.equals(SystemMenucontroller.class.getName()) )
+                   if (classone.equals(Mangercontroller.class.getName())|classone.equals(SystemMenucontroller.class.getName()) )
                    {
                        //||classone.equals(SystemMenucontroller.class.getName()) ||classone.equals(RoleController.class.getName())
-                       throw new RuntimeException("没有权限");
+                       if(joinPoint.getSignature().getName().equals("findbymangerid"))
+                       {
+                           return ;
+
+                       }else {
+                           throw new RuntimeException(manager.getRolestr()+"没有此菜单的权限");
+                       }
+
                    }
-                   System.out.println("吊");
+
                    break;
 
            }
        }
        else
        {
-           System.out.println("方法执行前");
+           utilcontroller.todologin();
        }
+
        // if (classone instanceof Manger || classone instanceof SystemMenu)
-
-
-
 
     }
     @After("poincut()")
     public void After(JoinPoint joinPoint)
     {
-        String className =joinPoint.getTarget().getClass().getName();
-        String methodName=joinPoint.getSignature().getName();
-        System.out.println("方法调用后");
-        System.out.println("类名后--"+className+"方法名字："+methodName);
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
+        String url = request.getRequestURI();
+        System.out.println(url);
+
+  /*      List<Manger> list=mangerMapper.selectall(new HashMap());
+        ValueOperations valueOperations=template.opsForValue();
+
+        for (Manger m:list)
+        {
+            valueOperations.set(m.getManagerPhone(),m );
+
+        }*/
 
     }
 

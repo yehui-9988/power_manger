@@ -2,6 +2,8 @@ package com.neusoft.dao;
 
 import com.neusoft.bean.Vitalsigns;
 
+import java.util.List;
+
 public interface VitalsignsMapper {
     int deleteByPrimaryKey(Integer ivitalsignsid);
 

@@ -27,7 +27,7 @@
 
 <html>
 <head>
-    <title>生命体征</title>
+    <title>研究前用药</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
@@ -55,8 +55,8 @@
     <el-row>
 
         <el-col :span="24">
-            <el-divider content-position="center">合并疾病/既往病历史</el-divider>
-            <el-table size="mini" :data="master_user.data" empty-text="暂无合并疾病" border style="width: 100%;"highlight-current-row>
+            <el-divider content-position="center">研究前用药</el-divider>
+            <el-table size="mini" :data="master_user.data" empty-text="暂无研究前用药" border style="width: 100%;"highlight-current-row>
                 <el-table-column type="index" label="序号"></el-table-column>
 
                 <el-table-column v-for="(v,i) in master_user.columns" :prop="v.field" :label="v.title" style="width:40%">
@@ -74,7 +74,7 @@
                             <span class="el-tag el-tag--info el-tag--mini" style="cursor: pointer;" @click="savedata(scope.row,scope.$index,false)">
                                保存
                             </span>
-                        <span class="el-tag el-tag--danger el-tag--mini" style="cursor: pointer;" @click="deleterow(scope.row,scope.$index,true)">
+                            <span class="el-tag el-tag--danger el-tag--mini" style="cursor: pointer;" @click="deleterow(scope.row,scope.$index,true)">
                                 删除
                             </span>
 
@@ -107,8 +107,12 @@
                 master_user: {
                     sel:[],
                     columns: [
-                        { field: "vcdiseasename", title: "药品名称", width: "300px"},
-                        { field: 'dtfind', title: "发生日期", width:"200px"  }
+                        { field: "vcdrugname", title: "商品名或通用民", width: "100px"},
+                        { field: 'vczjl', title: "每日总剂量", width:"100px"  },
+                        { field: 'vcgycj', title: "给药途径", width:"100px"  },
+                        { field: 'begintime', title: "开始时间", width:"100px"  },
+                        { field: 'endtime', title: "结束时间", width:"100px"  },
+                        { field: 'vccontent', title: "主诉内容", width:"200px"  },
                     ],
                     data:[],
                 },
@@ -127,10 +131,11 @@
                     var data={
                         'id':this.paramid
                     }
-                    axios.get("<%=basePath%>admin/casehistory/selectbyicaseid",{
+                    axios.get("<%=basePath%>admin/pretreatment/select",{
                         params: data
                     }).then(function (response) {
                         self.master_user.data=response.data.object
+                        console.log("研究前药"+self.master_user.data);
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -139,7 +144,6 @@
             },
             //读取表格数据
             readMasterUser() {
-                //根据实际情况，自己改下啊
                 this.loadtabeldata();
                 this.master_user.data.map(i => {
                     i.isSet=false;//给后台返回数据添加`isSet`标识
@@ -148,11 +152,7 @@
             },
             //添加账号
             addMasterUser() {
-                // for (let i of this.master_user.data) {
-                //     if (i.isSet)
-                //     return this.$message.warning("请先保存当前编辑项");
-                // }
-                let j = { id: 0, vcdiseasename: "",bdel:0,icaseid:<%=id%>,vctype:3, dtfind: "",  isSet: true};
+                let j = { id: 0, vcdrugname: "",vczjl:" ",icaseid:<%=id%>,vctype:3, vcgycj: "", dtbegin:" " ,dtend:"",vccontent:"",isSet: true};
                 this.master_user.data.push(j);
                 this.master_user.sel = j
             },
@@ -167,7 +167,7 @@
                         row[k] = data[k];
                     self.pasthistory=row;
 
-                    axios.post("<%=basePath%>admin/casehistory/savepasthistory",Qs.stringify(self.pasthistory))
+                    axios.post("<%=basePath%>admin/pretreatment/save",Qs.stringify(self.pasthistory))
                         .then(function (response) {
                             if (response.data.code==10000)
                             {
@@ -200,15 +200,15 @@
             {
 
                 var data={
-                    'ipasthistoryid':row.ipasthistoryid
+                    'preid':row.preid
                 }
-                if (row.ipasthistoryid==null)
+                if (row.preid==null)
                 {
                     this.master_user.data.splice(index, 1)
                     return false;
                 }
                 var self=this;
-                axios.get("<%=basePath%>admin/casehistory/deletepasthistory",{params:data})
+                axios.get("<%=basePath%>admin/pretreatment/delete",{params:data})
                     .then(function (response) {
                         if (response.data.code==10000)
                         {
