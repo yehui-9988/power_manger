@@ -4,6 +4,7 @@ package com.neusoft.controller;
 import cn.afterturn.easypoi.cache.manager.IFileLoader;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.neusoft.bean.Manger;
 import com.neusoft.bean.MangerRoleRf;
 import com.neusoft.bean.RoleMenuRf;
@@ -72,7 +73,7 @@ public class Mangercontroller {
              bean=new ResultBean(10000);
              bean.setObject(info);
 
-         }catch (Exception e)
+         }catch (RuntimeException e)
          {
              e.printStackTrace();
              bean=new ResultBean(30000);
@@ -277,10 +278,10 @@ public class Mangercontroller {
             }
 
 
-        }catch (Exception e)
+        }catch(RuntimeException e)
         {
             e.printStackTrace();
-            bean=new ResultBean(30000);
+            bean=new ResultBean(30001);
             bean.setMessage(e.getMessage());
         }
         return bean;
