@@ -32,26 +32,9 @@ public class RedisController {
         {
             valueOperations.set(m.getManagerPhone(),m );
 
+
         }
         return"/login/index";
-
-//        HashOperations hashOperations= template.opsForHash();
-//
-//        HashMap map=new HashMap();
-//        map.put("1", "张三");
-//        map.put("2", "张三22");
-//        map.put("3", "张三33");
-//        hashOperations.putAll("testhash",map );
-//        hashOperations.put("testhash", "4", "张三44");
-//
-////        hashOperations.put("testmap", , );
-//        Object object=hashOperations.get("testhash", "1");
-//        SetOperations setOperations=template.opsForSet();
-//        setOperations.add("users","李四","张三","王五");
-//        Set<String> set=new TreeSet<>();
-//        set.add("你好");
-//        setOperations.add("testset",set);
-//        template.opsForValue();
 
 
 

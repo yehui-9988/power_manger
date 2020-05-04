@@ -4,10 +4,13 @@ package com.neusoft.controller;
 import com.neusoft.bean.Vitalsigns;
 import com.neusoft.dao.VitalsignsMapper;
 import com.neusoft.until.ResultBean;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("admin/smtz")
@@ -21,7 +24,7 @@ public class SmtzController {
     @ResponseBody
     public Object selectbyid(int id){
 
-        Vitalsigns vitalsigns=vmapper.selectByicaseid(id);
+       Vitalsigns vitalsigns=vmapper.selectByicaseid(id);
         if (vitalsigns!=null)
         {
             bean=new ResultBean();

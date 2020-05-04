@@ -199,10 +199,6 @@
                      }).catch(function (error) {
 
                  });
-
-
-
-
              },
              onSubmit() {
                  var self = this;

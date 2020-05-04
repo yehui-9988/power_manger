@@ -70,7 +70,7 @@
             <i class="el-icon-setting" style="margin-right: 10px"></i>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="addTab(modifypasswrodtitle,modifypasswrodname,modifypasswrodlink)">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="loginexit()"><a href="http://localhost:8080/util/login">注销账号</a></el-dropdown-item>
+                <el-dropdown-item @click.native="loginexit()"><el-link :underline="false" href="<%=basePath%>util/login">注销账号</el-link></el-dropdown-item>
 
             </el-dropdown-menu>
         </el-dropdown>
@@ -148,7 +148,7 @@
                 editableTabs: [{
                     title: '欢迎',
                     name: '1',
-                    src: 'http://localhost:8080/init'
+                    src: '<%=basePath%>init'
                 }],
                 tabIndex: 2,
                 menus:[],

@@ -58,16 +58,11 @@
        <div style="margin-bottom:10px;margin-top:10px" >
 
            <el-row :gutter="20">
-               <el-col :span="6">
-                   <el-button-group>
-                       <el-button type="primary" icon="el-icon-circle-plus-outline " @click="save"></el-button>
-                       <el-button type="primary" icon="el-icon-share"></el-button>
-                       <el-button type="primary" icon="el-icon-delete" @click="deleteall"></el-button>
-                   </el-button-group>
-               </el-col>
+               <el-col :span="3.5">
 
-               <el-col :span="3">
-                       <a href="<%=basePath%>static/template/manager.xlsx">模板下载</a>
+                       <el-button  size="small" type="success" round @click="save">新增数据</el-button>
+                       <el-button  size="small"  type="danger" round  @click="deleteall">批量删除</el-button>
+
                </el-col>
 
                <el-col :span="9">
@@ -78,8 +73,12 @@
                                :on-error="importfail"
                                :show-file-list="false"
                        >
-                           <el-button size="small" type="primary">批量添加</el-button>
+                           <el-button size="small" type="primary" round>批量添加</el-button>
                        </el-upload>
+               </el-col>
+
+               <el-col :span="3">
+                       <el-link type="primary" :underline=false href="<%=basePath%>static/template/manager.xlsx">模板下载</el-link>
                </el-col>
 
                <el-col :span="4">
@@ -224,7 +223,7 @@
                      width="200">
                  <template slot-scope="scope">
                      <el-button @click="openpowerdialog(scope.row)" type="text" size="small" >授权</el-button>
-                     <el-button @click="editmanager(scope)" type="text" size="small">编辑</el-button>
+                    <%-- <el-button @click="editmanager(scope)" type="text" size="small">编辑</el-button>--%>
                      <el-button @click="deletebyid(scope.row.managerId)" type="text" size="small">删除</el-button>
                  </template>
              </el-table-column>
@@ -236,7 +235,7 @@
                  layout=" prev, pager, next,sizes ,jumper"
                  :total="page.total"
                  :page-size="page.size"
-                 :page-sizes="[5, 10, 15, 20]"
+                 :page-sizes="[1,5,10]"
                  @current-change="changepage"
                  @size-change="handleSizeChange"
          >
@@ -263,7 +262,7 @@
                page: {
                    total: 0,
                    index: 1,
-                   size: 20
+                   size: 10
                },
                dialogFormVisible: false,
                dialogpowerVisible:false,
@@ -302,7 +301,7 @@
            }
        },
        created:function(){
-           console.log("nihao");
+
            this.getdata();
            this.getRoles();
 
@@ -312,7 +311,7 @@
 
            search(e )
            {
-               console.log("查找"+e.keyCode)
+
                this.getdata();
            },
 
@@ -328,7 +327,7 @@
                }
                this.pro=e.prop;
                this.getdata();
-               console.log(e.prop+"--"+e.order)
+
 
            },
            savepower(){
@@ -339,13 +338,11 @@
                        'manageid':this.currentid
 
                    }
-               console.log("_____"+data.roleids)
-               console.log("+++++"+data.manageid)
+
                var self=this;
                axios.post("<%=basePath%>admin/manager/savepower",
                    Qs.stringify(data)
                ).then(function (response) {
-                   console.log("值" + response)
 
                    if (response.data.code == '10000') {
                        self.$message({
@@ -362,14 +359,12 @@
 
 
                }).catch(function (error) {
-                   console.log(error);
+
                });
 
            },
            ///选择框改变 触发该方法
            handleCheckedrolesChange(e){
-
-               console.log(e)
                this.ids=[];
                for (var i=0;i<this.checkedroels.length;i++)
                {
@@ -400,13 +395,12 @@
            editmanager(e)
            {
                this.dialogFormVisible = true;
-               console.log("编辑功能的表格数据："+e.row);
                // this.manager={};
                this.manager=e.row;
                <%--this.imageUrl='<%=basePath%>static/imgs/default.jpg'--%>
                //打开dialog使得manager头像默认显示；
                this.imageUrl="<%=basePath%>"+e.row.managerImg;
-               console.log("managerUrl:"+this.imageUrl);
+
 
 
 
@@ -414,7 +408,6 @@
 
 
            getRoles: function () {
-           console.log("调用了getdata")
            var self = this;
            axios.get("<%=basePath%>admin/role/list")
                .then(function (response) {
@@ -426,17 +419,16 @@
                    }
 
                }).catch(function (error) {
-               console.log(error);
+
            });
 
            },
            deleteall:function(){
                var rows=this.$refs.tb1.selection;
-               console.log("rows:"+rows)
+
                var ids=[];
                for (var i=0;i<rows.length;i++){
                    ids.push(rows[i].managerId)
-                   console.log("IDS"+ids.join(','))
                }
                if (ids.length<=0)
                {
@@ -444,6 +436,7 @@
                        type: 'error',
                        message: '请选择删除的数据!'
                    });
+                   return false;
                }
                var self=this;
                var data={'ids': ids.join(',')}
@@ -471,7 +464,6 @@
            },
            importsuccess:function(response, file, fileList)
            {
-               console.log("批量导入的"+response+"----"+file+"-----"+fileList)
               if (response.code='10000')
               {
                   this.$message({
@@ -499,7 +491,6 @@
                    if (valid) {
                       this.submitAxios()
                    } else {
-                       console.log('error submit!!');
                        return false;
                    }
                });
@@ -532,8 +523,7 @@
            ///save或者修改的ajax的请求
            submitAxios:function(){
                 var self=this;
-                // console.log("测试manager"+self.manager);
-
+                 console.log("测试manager"+self.manager);
                     axios.post('<%=basePath%>admin/manager/save', Qs.stringify(self.manager))
                     .then(function (response) {
                         if (response.data.code=='10000')
@@ -564,13 +554,13 @@
                 })
            },
            save: function () {
-               console.log("点击了save")
+
                this.dialogFormVisible = true;
+               this.manager=[];
 
            },
            ///分页
            getdata: function () {
-               console.log("调用了getdata  ")
                var self = this;
                var data = {
                    'index': self.page.index,
@@ -583,7 +573,7 @@
                axios.get("<%=basePath%>admin/manager/list", {
                    params: data
                }).then(function (response) {
-                   console.log(response)
+
                    if (response.data.code == '10000') {
                        self.list = response.data.object.list;
                        self.page.total = response.data.object.total;
@@ -593,9 +583,6 @@
                        //     self.checkedroels.push(roels[i].roleid)
                        // }
 
-
-
-                       console.log(self.checkedroels)
                    }
 
                }).catch(function (error) {
@@ -604,14 +591,14 @@
 
            },
            changepage: function (page1) {
-               console.log(page1)
+
                this.page.index = page1;
                this.getdata()
 
            },
            handleSizeChange: function (val) {
                this.page.size = val;
-               console.log("pagesize"+ this.page.size)
+
                this.getdata();
            },
            deletebyid: function (id) {
@@ -626,7 +613,7 @@
                            'id': id
                        }
                    }).then(function (response) {
-                       console.log("值" + response)
+
                        // self.$message({
                        //     type: 'success',
                        //     message: '删除成功!'

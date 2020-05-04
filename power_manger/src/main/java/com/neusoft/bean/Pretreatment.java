@@ -9,17 +9,17 @@ public class Pretreatment implements Serializable {
 
     private String vctype;
 
-    private String ismuserid;
-
-    private String bdel;
-
     private String vcdrugname;
 
     private String vczjl;
 
-    private String vcdw;
-
     private String vcgycj;
+
+    private String begintime;
+
+    private String endtime;
+
+    private String vccontent;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,22 +47,6 @@ public class Pretreatment implements Serializable {
         this.vctype = vctype == null ? null : vctype.trim();
     }
 
-    public String getIsmuserid() {
-        return ismuserid;
-    }
-
-    public void setIsmuserid(String ismuserid) {
-        this.ismuserid = ismuserid == null ? null : ismuserid.trim();
-    }
-
-    public String getBdel() {
-        return bdel;
-    }
-
-    public void setBdel(String bdel) {
-        this.bdel = bdel == null ? null : bdel.trim();
-    }
-
     public String getVcdrugname() {
         return vcdrugname;
     }
@@ -79,19 +63,35 @@ public class Pretreatment implements Serializable {
         this.vczjl = vczjl == null ? null : vczjl.trim();
     }
 
-    public String getVcdw() {
-        return vcdw;
-    }
-
-    public void setVcdw(String vcdw) {
-        this.vcdw = vcdw == null ? null : vcdw.trim();
-    }
-
     public String getVcgycj() {
         return vcgycj;
     }
 
     public void setVcgycj(String vcgycj) {
         this.vcgycj = vcgycj == null ? null : vcgycj.trim();
+    }
+
+    public String getBegintime() {
+        return begintime;
+    }
+
+    public void setBegintime(String begintime) {
+        this.begintime = begintime == null ? null : begintime.trim();
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime == null ? null : endtime.trim();
+    }
+
+    public String getVccontent() {
+        return vccontent;
+    }
+
+    public void setVccontent(String vccontent) {
+        this.vccontent = vccontent == null ? null : vccontent.trim();
     }
 }

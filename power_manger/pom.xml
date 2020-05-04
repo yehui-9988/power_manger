@@ -21,6 +21,9 @@
     </properties>
 
     <dependencies>
+
+
+
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -227,6 +230,11 @@
             <artifactId>easypoi-annotation</artifactId>
             <version>${easypoi.version}</version>
         </dependency>
+     <!--   <dependency>
+            <groupId>com.neusoft</groupId>
+            <artifactId>power_manger</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
 
     </dependencies>
 

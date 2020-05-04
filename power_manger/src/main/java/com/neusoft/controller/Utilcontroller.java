@@ -50,10 +50,6 @@ public class Utilcontroller  extends BaseController{
             else {
                 ///删除验证码
                 session.removeAttribute("code");
-//                Map map = new HashMap();
-//                map.put("username", username);
-//                map.put("password", password);
-                //获取maanger 对象
                 Manger manger=(Manger)redisTemplate.opsForValue().get(username);
                 //从redis获取密码比较是否正确；
                 if (manger!=null&&manger.getManagerPassword().equals(password))
@@ -65,21 +61,12 @@ public class Utilcontroller  extends BaseController{
                     bean.setMessage("账号或者密码错误");
 
                 }
-
-
-//                List<Manger> list = mapper.loginselect(map);
-//                if (map != null && map.size() > 0) {
-//                    bean = new ResultBean(10000);
-//                    session.setAttribute(Manger.CURRENT_MANAGER, list.get(0));
-//                } else {
-//                    bean.setMessage("账号或者密码错误");
-//                }
          }
-
         }catch (Exception e)
         {
             e.printStackTrace();
             bean=new ResultBean(30000);
+            bean.setMessage("账号或者密码错误");
         }
         return bean;
     }
