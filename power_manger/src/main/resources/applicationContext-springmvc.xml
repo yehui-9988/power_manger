@@ -66,6 +66,12 @@
             <!--&lt;!&ndash;<mvc:exclude-mapping path=""></mvc:exclude-mapping>&ndash;&gt;//不拦截的地址-->
             <bean class="com.neusoft.interceptor.AdminInterceptor"></bean>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/test/**"/>
+            <!--&lt;!&ndash;<mvc:exclude-mapping path=""></mvc:exclude-mapping>&ndash;&gt;//不拦截的地址-->
+            <bean class="com.neusoft.interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>

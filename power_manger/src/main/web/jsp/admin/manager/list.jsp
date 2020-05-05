@@ -535,18 +535,18 @@
                             self.getdata();
                             self.dialogFormVisible=false;
                         }
-                        else
+                        else if(response.data.code=='30001')
                         {
                             self.$message({
                                 type: 'error',
-                                message: '添加失败'
+                                message: '电话号码已存在，请重新输入!'
                             });
                         }
 
                     }).catch(function (response) {
                     self.$message({
                         type: 'error',
-                        message: '添加失败!'
+                        message: '网络异常!'
                     });
                     self.getdata();
                     self.dialogFormVisible=false;

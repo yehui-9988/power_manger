@@ -36,13 +36,8 @@ public class AopDemo {
     HttpSession session;
     @Autowired
     MangerMapper mangerMapper;
-
     @Autowired
     RedisTemplate template;
-
-
-
-
     Utilcontroller utilcontroller=new Utilcontroller();
 
 
@@ -52,7 +47,6 @@ public class AopDemo {
 
 
     }
-
   @Before("poincut()")
     public void before(JoinPoint joinPoint) throws Exception
     {
@@ -77,22 +71,18 @@ public class AopDemo {
 
 
                }
-                 //  session.removeAttribute(Manger.CURRENT_MANAGER);
+
 
            }
 
-           String url = request.getRequestURI();
-           String url2 = url.substring(url.lastIndexOf("/") + 1,
-                   url.lastIndexOf("?") == -1 ? url.length() : url.lastIndexOf("?"));
            switch (manager.getRolestr()) {
                case "超级管理员":
                    break;
                case "普通管理员":
                    if (classone.equals(SystemMenucontroller.class.getName())) {
-
                        if(joinPoint.getSignature().getName().equals("findbymangerid"))
                        {
-                           return ;
+                           return;
 
                        }else {
                            throw new RuntimeException("没有权限");
@@ -102,10 +92,9 @@ public class AopDemo {
                default:
                    if (classone.equals(Mangercontroller.class.getName())|classone.equals(SystemMenucontroller.class.getName()) )
                    {
-                       //||classone.equals(SystemMenucontroller.class.getName()) ||classone.equals(RoleController.class.getName())
                        if(joinPoint.getSignature().getName().equals("findbymangerid"))
                        {
-                           return ;
+                           return;
 
                        }else {
                            throw new RuntimeException(manager.getRolestr()+"没有此菜单的权限");
@@ -119,8 +108,10 @@ public class AopDemo {
        }
        else
        {
-           utilcontroller.todologin();
+
+
        }
+
 
        // if (classone instanceof Manger || classone instanceof SystemMenu)
 
@@ -128,19 +119,6 @@ public class AopDemo {
     @After("poincut()")
     public void After(JoinPoint joinPoint)
     {
-        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                .getRequest();
-        String url = request.getRequestURI();
-        System.out.println(url);
-
-  /*      List<Manger> list=mangerMapper.selectall(new HashMap());
-        ValueOperations valueOperations=template.opsForValue();
-
-        for (Manger m:list)
-        {
-            valueOperations.set(m.getManagerPhone(),m );
-
-        }*/
 
     }
 
@@ -157,7 +135,7 @@ public class AopDemo {
 
             System.out.println("方法名"+point.getSignature().getName()+"\n类型:"+point.getTarget().getClass().getName());
             long starttime=System.currentTimeMillis();
-            Object obj=point.proceed();
+             Object obj=point.proceed();
             long endtime=System.currentTimeMillis();
              System.out.println("耗时："+(endtime-starttime));
              return obj;

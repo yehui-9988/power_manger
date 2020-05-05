@@ -17,9 +17,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         Object object=session.getAttribute(Manger.CURRENT_MANAGER);
         if (object==null)
         {
-            httpServletResponse.sendRedirect("/util/login");
-            Map<String,Object> map=new HashMap<>();
-
+            httpServletResponse.sendRedirect("util/login");
             return false;
         }else {
             return true;
