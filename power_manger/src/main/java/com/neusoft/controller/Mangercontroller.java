@@ -256,8 +256,9 @@ public class Mangercontroller {
         try {
             if (manger.getManagerId()!=null)
             {
-                rows=mapper.updateByPrimaryKeySelective(manger);
                 manger.setManagerLastmodify(new Date());
+                rows=mapper.updateByPrimaryKeySelective(manger);
+
             }else {
 
                 manger.setManagerPassword("000000");
@@ -267,9 +268,10 @@ public class Mangercontroller {
             }
             if (rows>0)
             {
-
-                Manger m=mapper.selectrole(manger.getManagerId());
-                redisTemplate.opsForValue().set(m.getManagerPhone(),m);
+                HashMap<String,String> map=new HashMap<>();
+                map.put("phone",manger.getManagerPhone());
+                List<Manger> list1=mapper.selectall(map);
+                redisTemplate.opsForValue().set(list1.get(0).getManagerPhone(),list1.get(0));
                 bean=new ResultBean(10000);
 
             }

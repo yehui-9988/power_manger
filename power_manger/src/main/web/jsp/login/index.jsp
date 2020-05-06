@@ -61,7 +61,7 @@
 			<div class='success'>
 			</div>
 			<div class='disclaimer'>
-				<p>欢迎登陆猴菇米稀后台管理系统</p>
+				<p>欢迎登录猴菇米稀后台管理系统</p>
 			</div>
 		</div>
 		<div class='authent'>
