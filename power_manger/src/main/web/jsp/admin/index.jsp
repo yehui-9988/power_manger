@@ -48,6 +48,10 @@
             background-color: #20222A;
 
         }
+        .jxutcm{
+
+
+        }
         iframe{
             width: 100%;
             height: 100%;
@@ -65,16 +69,34 @@
 
 <el-container style="height: 100%">
     <el-header style="text-align: right; font-size: 12px;height: 50px">
+        <el-row>
+            <el-col :span=1>
+                    <img style="width:40px;height:40px;padding-top:5px;margin-right:80px" src='<%=basePath%>static/imgs/jxutcm.jpg'>
+            </el-col>
+            <el-col :span="6" style="text-align: left;">
+                <span id="jxutcm" style="font-size: 25px; font-family:楷体;text-align: left;margin-left: 1px">江西中医大学</span>
+            </el-col>
+            <el-col :span="16">
+                <span style="font-size: 18px;font-family:楷体">${sessionScope.manager.rolestr}/</span>
+                <span style="font-size: 18px;font-family:楷体">${sessionScope.manager.managerName}</span>
+            </el-col>
+            <el-col :span="1" style="margin-top: 17px;" >
+                <el-dropdown style="color: #fbfbfb;font-size: 18px;margin-right: 10px">
+                    <i class="el-icon-setting" style="margin-right: 10px"></i>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="addTab(modifypasswrodtitle,modifypasswrodname,modifypasswrodlink)">修改密码</el-dropdown-item>
+                        <el-dropdown-item @click.native="loginexit()"><el-link :underline="false" href="<%=basePath%>util/login">注销账号</el-link></el-dropdown-item>
 
-        <el-dropdown style="color: #fbfbfb;font-size: 16px">
-            <i class="el-icon-setting" style="margin-right: 10px"></i>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="addTab(modifypasswrodtitle,modifypasswrodname,modifypasswrodlink)">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="loginexit()"><el-link :underline="false" href="<%=basePath%>util/login">注销账号</el-link></el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
 
-            </el-dropdown-menu>
-        </el-dropdown>
-        <span style="font-size: 15px">${sessionScope.manager.managerName}</span>
+            </el-col>
+        </el-row>
+
+
+
+
+
     </el-header>
 
 

@@ -31,7 +31,7 @@
 					<div class='icon'>
 						<img alt="" src='<%=basePath%>static/login/img/user_icon_copy.png'>
 					</div>
-					<input name="username" id="username" dplaceholder='请输入手机号码' maxlength="16" type='text' autocomplete="off" value="15879900514" />
+					<input name="username" id="username" placeholder='请输入手机号码' maxlength="16" type='text' autocomplete="off"/>
 					<div class='validation'>
 						<img alt="" src='<%=basePath%>static/login/img/tick.png'>
 					</div>
@@ -40,7 +40,7 @@
 					<div class='icon'>
 						<img alt="" src='<%=basePath%>static/login/img/lock_icon_copy.png'>
 					</div>
-					<input name="password" id="password" placeholder='请输入密码' value="000000"maxlength="16" type='password' autocomplete="off">
+					<input name="password" id="password" placeholder='请输入密码'maxlength="16" type='password' autocomplete="off">
 					<div class='validation'>
 						<img alt="" src='<%=basePath%>static/login/img/tick.png'>
 					</div>
@@ -61,7 +61,7 @@
 			<div class='success'>
 			</div>
 			<div class='disclaimer'>
-				<p>欢迎登陆猴菇米稀后台管理系统</p>
+				<p>欢迎登录猴菇米稀后台管理系统</p>
 			</div>
 		</div>
 		<div class='authent'>
@@ -190,7 +190,7 @@
 								}
 								else
 								{
-								    alert(data.message)
+									ErroAlert(data.message)
 								}
                             },
 							complete:function () {

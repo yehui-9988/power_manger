@@ -2,15 +2,16 @@ package com.neusoft.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
+
 public class Testcontroller{
+
     @RequestMapping("test")
     public String test()
     {
-
-        System.out.println("test_git");
         return "admin/index";
 
     }
@@ -20,7 +21,7 @@ public class Testcontroller{
         return "test";
     }
 
-    @RequestMapping("hgmx/cwjb/jxsj")
+    @RequestMapping("admin/cwjb/jxsj")
     public String openCwjbJxsj(){
        return "hgmx/cwjb/jxsj";
   }

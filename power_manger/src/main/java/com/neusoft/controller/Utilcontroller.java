@@ -2,17 +2,20 @@ package com.neusoft.controller;
 
 import com.neusoft.bean.Manger;
 import com.neusoft.dao.MangerMapper;
+import com.neusoft.until.IPutil;
 import com.neusoft.until.ResultBean;
 import com.neusoft.until.VerifyCodeUtils;
 import org.apache.ibatis.executor.ResultExtractor;
 import org.omg.PortableServer.POAPackage.ObjectAlreadyActive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -36,7 +39,7 @@ public class Utilcontroller  extends BaseController{
     }
     @ResponseBody
     @RequestMapping("login/do")
-    public Object login (String password, String username, String code,HttpSession session)
+    public Object login (String password, String username, String code, HttpSession session, HttpServletRequest request)
     {
         ResultBean bean=null;
         try {
@@ -56,6 +59,8 @@ public class Utilcontroller  extends BaseController{
                 {
                     bean = new ResultBean(10000);
                     session.setAttribute(Manger.CURRENT_MANAGER, manger);
+                    String ip= IPutil.getIpAddr(request);
+                    session.setAttribute("IP",ip);
 
                 }else {
                     bean.setMessage("账号或者密码错误");

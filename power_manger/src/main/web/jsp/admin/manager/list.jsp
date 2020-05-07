@@ -223,7 +223,7 @@
                      width="200">
                  <template slot-scope="scope">
                      <el-button @click="openpowerdialog(scope.row)" type="text" size="small" >授权</el-button>
-                    <%-- <el-button @click="editmanager(scope)" type="text" size="small">编辑</el-button>--%>
+                     <el-button @click="editmanager(scope)" type="text" size="small">编辑</el-button>
                      <el-button @click="deletebyid(scope.row.managerId)" type="text" size="small">删除</el-button>
                  </template>
              </el-table-column>
@@ -396,10 +396,18 @@
            {
                this.dialogFormVisible = true;
                // this.manager={};
+
                this.manager=e.row;
                <%--this.imageUrl='<%=basePath%>static/imgs/default.jpg'--%>
                //打开dialog使得manager头像默认显示；
-               this.imageUrl="<%=basePath%>"+e.row.managerImg;
+               if (e.row.managerImg!=null)
+               {
+                   this.imageUrl="<%=basePath%>"+e.row.managerImg;
+               }else {
+
+                   this.imageUrl='<%=basePath%>static/imgs/default.jpg'
+               }
+
 
 
 
@@ -523,7 +531,7 @@
            ///save或者修改的ajax的请求
            submitAxios:function(){
                 var self=this;
-                 console.log("测试manager"+self.manager);
+                delete self.manager.roles;
                     axios.post('<%=basePath%>admin/manager/save', Qs.stringify(self.manager))
                     .then(function (response) {
                         if (response.data.code=='10000')
@@ -535,18 +543,18 @@
                             self.getdata();
                             self.dialogFormVisible=false;
                         }
-                        else
+                        else if(response.data.code=='30001')
                         {
                             self.$message({
                                 type: 'error',
-                                message: '添加失败'
+                                message: '电话号码已存在，请重新输入!'
                             });
                         }
 
                     }).catch(function (response) {
                     self.$message({
                         type: 'error',
-                        message: '添加失败!'
+                        message: '网络异常!'
                     });
                     self.getdata();
                     self.dialogFormVisible=false;
@@ -555,8 +563,12 @@
            },
            save: function () {
 
+
                this.dialogFormVisible = true;
                this.manager=[];
+
+
+
 
            },
            ///分页
