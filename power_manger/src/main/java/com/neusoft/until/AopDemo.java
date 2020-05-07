@@ -66,13 +66,7 @@ public class AopDemo {
                {
                  utilcontroller.todologin();
 
-               }finally {
-
-
-
                }
-
-
            }
 
            switch (manager.getRolestr()) {
@@ -99,7 +93,6 @@ public class AopDemo {
                        }else {
                            throw new RuntimeException(manager.getRolestr()+"没有此菜单的权限");
                        }
-
                    }
 
                    break;

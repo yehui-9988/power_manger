@@ -260,7 +260,6 @@ public class Mangercontroller {
                 rows=mapper.updateByPrimaryKeySelective(manger);
 
             }else {
-
                 manger.setManagerPassword("000000");
                 manger.setManagerCreatetime(new Date());
                 manger.setManagerLastmodify(new Date());
@@ -273,13 +272,10 @@ public class Mangercontroller {
                 List<Manger> list1=mapper.selectall(map);
                 redisTemplate.opsForValue().set(list1.get(0).getManagerPhone(),list1.get(0));
                 bean=new ResultBean(10000);
-
             }
             else {
                 bean=new ResultBean(20000);
             }
-
-
         }catch(RuntimeException e)
         {
             e.printStackTrace();
