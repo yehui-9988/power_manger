@@ -83,7 +83,6 @@
 
                <el-col :span="4">
 
-
                        <el-input
                                @keyup.enter.native="search"
                                v-model="param"
@@ -147,7 +146,7 @@
      </el-dialog>
 
 
-         <template>
+         <div style="width:100%;height: 400px">
          <el-table
                  :data="list"
                  ref="tb1"
@@ -156,7 +155,8 @@
                  @sort-change="sort"
                  style="width:100%;"
                  :row-style="{height:'0px'}"
-                 :cell-style="{padding:'0px'}">
+                 :cell-style="{padding:'0px'}"
+                 >
              <el-table-column
                      type="selection"
                      width="55"
@@ -228,18 +228,19 @@
                  </template>
              </el-table-column>
          </el-table>
-     </template>
+             <el-pagination
+                     background
+                     layout=" prev, pager, next,sizes ,jumper"
+                     :total="page.total"
+                     :page-size="page.size"
+                     :page-sizes="[1,5,10]"
+                     @current-change="changepage"
+                     @size-change="handleSizeChange"
+             >
+             </el-pagination>
 
-         <el-pagination
-                 background
-                 layout=" prev, pager, next,sizes ,jumper"
-                 :total="page.total"
-                 :page-size="page.size"
-                 :page-sizes="[1,5,10]"
-                 @current-change="changepage"
-                 @size-change="handleSizeChange"
-         >
-         </el-pagination>
+         </div>
+
 
  </div>
 

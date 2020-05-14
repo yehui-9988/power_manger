@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -98,10 +100,16 @@ public class CasehistoryController {
        casehistory.setIsmuserid(manger.getManagerId());
        if (null!=casehistory.getIcasehistoryid())
        {
+
             result= mapper.updateByPrimaryKeySelective(casehistory);
 
        }
        else {
+            if (null==casehistory.getDtregister())
+            {
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                casehistory.setDtregister(sdf.format(new Date()));
+            }
             result=mapper.insertSelective(casehistory);
        }
 
