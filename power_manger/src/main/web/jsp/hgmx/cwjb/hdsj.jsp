@@ -16,7 +16,7 @@
     <title>核对数据</title>
     <link href="<%=basePath%>static/icon/iconfont.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+     <script src="https://unpkg.com/vue/dist/vue.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -83,24 +83,13 @@
                      </el-form-item>
                  </el-col>
                  <el-col :span="spansize">
-                     <el-form-item label="病案号：">
-                         <el-input v-model="form.vcmdrecord"></el-input>
-                     </el-form-item>
-                 </el-col>
-             </el-row>
-
-             <el-row :gutter="gutter">
-                 <el-col :span="spansize" :offset="offset">
-                     <el-form-item label="入组编号：">
-                         <el-input v-model="form.vcserialnum"></el-input>
-                     </el-form-item>
-                 </el-col>
-                 <el-col :span="spansize">
                      <el-form-item label="身份证号：">
                          <el-input v-model="form.vcidentity"></el-input>
                      </el-form-item>
                  </el-col>
              </el-row>
+
+
 
              <el-row :gutter="gutter">
                  <el-col :span="spansize" :offset="offset">

@@ -52,10 +52,15 @@
 
 </style>
 <div id="app">
+    <el-row style="margin-top: 2px">
+        <el-col :span="3">
+            <el-button type="success"  round size="small" @click="addMasterUser()" style="margin-bottom:3px;margin-top: 3px">添加数据</el-button>
+        </el-col>
+    </el-row>
     <el-row>
 
         <el-col :span="24">
-            <el-divider content-position="center">研究前用药</el-divider>
+
             <el-table size="mini" :data="master_user.data" empty-text="暂无研究前用药" border style="width: 100%;"highlight-current-row>
                 <el-table-column type="index" label="序号"></el-table-column>
 
@@ -84,11 +89,7 @@
         </el-col>
 
     </el-row>
-    <el-row>
-        <el-col :span="24">
-            <div class="el-table-add-row" style="width: 99.2%;" @click="addMasterUser()"><span>+ 添加</span></div>
-        </el-col>
-    </el-row>
+
 
 </div>
 
@@ -240,9 +241,5 @@
         }
     });
 </script>
-</body>
-
-</html>
-
 </body>
 </html>

@@ -51,6 +51,7 @@
         manager_phone like CONCAT('%',#{param},'%')
         or manager_idcard like CONCAT('%',#{param},'%')
         or manager_name like CONCAT('%',#{param},'%')
+        or manager_id like concat ('%',#{param},'%')
       </if>
       <if test="phone!=null">
         and manager_phone=#{phone}

@@ -115,24 +115,13 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="spansize">
-                        <el-form-item label="病案号：">
-                            <el-input v-model="form.vcmdrecord"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row :gutter="gutter">
-                    <el-col :span="spansize" :offset="offset">
-                        <el-form-item label="入组编号：">
-                            <el-input v-model="form.vcserialnum"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="spansize">
                         <el-form-item label="身份证号：">
                             <el-input v-model="form.vcidentity"></el-input>
                         </el-form-item>
                     </el-col>
+
                 </el-row>
+
 
                 <el-row :gutter="gutter">
                     <el-col :span="spansize" :offset="offset">
@@ -183,59 +172,62 @@
             :default-sort = "{prop: 'managerId', order: 'descending'}"
             style="width:100%;"
             :row-style="{height:'10px'}"
-            :cell-style="{padding:'5px'}">
-        <el-table-column
-                type="selection"
-                width="55"
-        >
+            :cell-style="{padding:'5px'}"
+            >
         </el-table-column>
         <el-table-column
+                align="center"
                 fixed
                 sortable
                 prop="icasehistoryid"
-                label="ID"
+                label="病案号"
                 width="120"
 
         >
         </el-table-column>
 
         <el-table-column
+                align="center"
                 prop="vcname"
                 label="患者姓名"
                 width="150">
         </el-table-column>
-     <%--   <el-table-column
-                label="头像"
-                width="180">
-            <template slot-scope="scope">
-                <img  style="height: 50px; width: 150px" :src="'<%=basePath%>'+scope.row.managerImg" onerror="javascript:this.src='<%=basePath%>static/imgs/default.jpg'">
-                &lt;%&ndash;scope.row.managerImg&ndash;%&gt;
-            </template>
-        </el-table-column>--%>
         <el-table-column
+                align="center"
                 prop="vcphone"
                 label="电话号码"
                 width="150">
         </el-table-column>
+
         <el-table-column
-                prop="vcserialnum"
-                label="患者入组编号"
-                width="200">
-        </el-table-column>
-        <el-table-column
+                align="center"
                 prop="vcidentity"
                 label="身份证号码"
                 width="200">
         </el-table-column>
         <el-table-column
+                align="center"
+                :show-overflow-tooltip="true"
+                prop="vcaddress"
+                label="家庭住址"
+                width="200">
+        </el-table-column>
+     <%--   <el-table-column
                 prop="vcmdrecord"
                 label="病案号"
                 width="200">
+        </el-table-column>--%>
+        <el-table-column
+                prop="ismuserid"
+                align="center"
+                label="录入人员编号"
+                width="150">
         </el-table-column>
         <el-table-column
+                align="center"
                 prop="dtregister"
                 label="登记时间"
-                width="200">
+                width="150">
         </el-table-column>
 
         <el-table-column
@@ -311,11 +303,11 @@
                 },{
                     title: '检查单报告',
                     name: '6',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
+                    src:'<%=basePath%>jsp/hgmx/cwjb/jcbgd.jsp?id='
                 },{
                     title: '医生处方记录',
                     name: '7',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
+                    src:'<%=basePath%>jsp/hgmx/cwjb/yscfjl.jsp?id='
                 },
                     ],
                 dialogsjgl:false,
