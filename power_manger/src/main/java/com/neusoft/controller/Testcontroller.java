@@ -18,6 +18,7 @@ public class Testcontroller{
     @RequestMapping("init")
     public String initpage()
     {
+        System.out.println("测试类");
         return "test";
     }
 
@@ -25,4 +26,15 @@ public class Testcontroller{
     public String openCwjbJxsj(){
        return "hgmx/cwjb/jxsj";
   }
+
+    @RequestMapping("admin/cwsf/jxsj")
+    public String openCwsfJxsj(){
+        return "hgmx/cwsf/jxsj";
+    }
+
+    @RequestMapping("admin/cwcx")
+    public String openCwcx(){
+        return "hgmx/echarts/sjtj";
+    }
+
 }

@@ -85,7 +85,6 @@ public class Utilcontroller  extends BaseController{
         String code= VerifyCodeUtils.generateVerifyCode(4);
         session.setAttribute("code", code);
      try {
-
          VerifyCodeUtils.outputImage(100, 44, response.getOutputStream(),code);
          response.getOutputStream().flush();
          response.getOutputStream().close();

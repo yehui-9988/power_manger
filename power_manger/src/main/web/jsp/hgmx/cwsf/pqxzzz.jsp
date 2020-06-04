@@ -15,7 +15,6 @@
     <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
 </head>
 <style>
 
@@ -380,7 +379,7 @@
                     excd:'',
                     exdp:'',
                     exzp:'',
-                    vctype:'0'
+                    vctype:'1'
                 },
                 temp:[],
             };
@@ -421,7 +420,7 @@
                 var self=this;
                 var data={
                     icaseid:self.icaseid,
-                    vctype:'0'
+                    vctype:'1'
                 }
                 axios.get("<%=basePath%>admin/pqxzzz/selectpqxzzz",{params:data}
                 ).then(function (response) {

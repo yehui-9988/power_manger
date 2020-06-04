@@ -1,5 +1,7 @@
 package com.neusoft.bean;
 
+
+
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
 import java.io.Serializable;

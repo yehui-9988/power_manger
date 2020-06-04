@@ -13,7 +13,7 @@
 %>
 <html>
 <head>
-    <title>基线数据</title>
+    <title>随访数据</title>
 
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -33,7 +33,7 @@
 <body >
 <div id="app">
     <!--打开编辑 核对数据的选项卡 -->
-    <el-dialog title="信息核对" :visible.sync="dialogsjgl"
+    <el-dialog :visible.sync="dialogsjgl"
                width="80%" height="500px"
                @close="getdata()"
                top="0vh"
@@ -154,7 +154,7 @@
         </div>
     </el-dialog>
 
-    <div style="margin-bottom:5px;margin-top:5px" >
+<%--    <div style="margin-bottom:5px;margin-top:5px" >
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-button-group>
@@ -162,7 +162,7 @@
                 </el-button-group>
             </el-col>
         </el-row>
-    </div>
+    </div>--%>
 
 <template>
     <el-table
@@ -235,15 +235,11 @@
                 label="操作"
                 width="200">
             <template slot-scope="scope">
-
                 <el-button @click="selectrow(scope.row)" type="success" size="mini">编辑</el-button>
-                <el-button @click="deleterow(scope.row)" type="danger" size="mini">删除</el-button>
+             <%--   <el-button @click="deleterow(scope.row)" type="danger" size="mini">删除</el-button>--%>
             </template>
         </el-table-column>
     </el-table>
-
-
-
 </template>
     <el-pagination
             background
@@ -281,35 +277,10 @@
                 editableTabsValue: '1',
                 testvalue:'2',
                 editableTabs: [{
-                    title: '核对数据',
-                    name: '1',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/hdsj.jsp?id='
-                }, {
-                    title: '疾病历史',
-                    name: '2',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/jbls.jsp?id='
-                },{
-                    title: '生命体征',
-                    name: '3',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/smtz.jsp?id='
-                },{
-                    title: '研究前用药',
-                    name: '4',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/yjqyy.jsp?id='
-                },{
                     title: '脾气虚症状',
-                    name: '5',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/pqxzzz.jsp?id='
-                },{
-                    title: '检查单报告',
-                    name: '6',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/jcbgd.jsp?id='
-                },{
-                    title: '医生处方记录',
-                    name: '7',
-                    src:'<%=basePath%>jsp/hgmx/cwjb/yscfjl.jsp?id='
-                },
-                    ],
+                    name: '1',
+                    src:'<%=basePath%>jsp/hgmx/cwsf/pqxzzz.jsp?id='
+                }],
                 dialogsjgl:false,
                 dialogxzsj:false,
             }

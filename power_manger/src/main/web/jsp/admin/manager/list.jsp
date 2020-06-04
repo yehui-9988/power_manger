@@ -176,16 +176,16 @@
                      label="姓名"
                      width="120">
              </el-table-column>
-             <el-table-column
+          <%--   <el-table-column
                      label="头像"
                      width="180">
                  <template slot-scope="scope">
 
                      <img  style="height: 50px; width: 150px" :src="'<%=basePath%>'+scope.row.managerImg" onerror="javascript:this.src='<%=basePath%>static/imgs/default.jpg'">
-                     <%--scope.row.managerImg--%>
+                     &lt;%&ndash;scope.row.managerImg&ndash;%&gt;
                  </template>
              </el-table-column>
-
+--%>
              <el-table-column
                      prop="managerPhone"
                      label="电话"
@@ -201,11 +201,11 @@
                      label="身份证号码"
                      width="200">
              </el-table-column>
-             <el-table-column
+         <%--    <el-table-column
                      prop="managerCreatetime"
                      label="创建时间"
                      width="200">
-             </el-table-column>
+             </el-table-column>--%>
              <el-table-column
                      prop="rolestr"
                      label="权限"

@@ -106,8 +106,6 @@ public class AopDemo {
        }
 
 
-       // if (classone instanceof Manger || classone instanceof SystemMenu)
-
     }
     @After("poincut()")
     public void After(JoinPoint joinPoint)

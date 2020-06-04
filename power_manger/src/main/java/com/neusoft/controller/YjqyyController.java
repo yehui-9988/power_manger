@@ -169,7 +169,7 @@ public class YjqyyController {
 
     @RequestMapping("uploadyscfjl")
     @ResponseBody
-    public Object uploadyscfjl(Yscfjl yscfjl)
+    public synchronized Object uploadyscfjl(Yscfjl yscfjl)
     {
         int result=yscfjlMapper.insertSelective(yscfjl);
         if (result>0)

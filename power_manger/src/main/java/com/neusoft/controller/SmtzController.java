@@ -24,14 +24,18 @@ public class SmtzController {
     @ResponseBody
     public Object selectbyid(int id){
 
-       Vitalsigns vitalsigns=vmapper.selectByicaseid(id);
+        Vitalsigns vitalsigns=new Vitalsigns();
+        vitalsigns=vmapper.selectByicaseid(id);
         if (vitalsigns!=null)
         {
             bean=new ResultBean();
             bean.setCode(10000);
-            bean.setObject(vitalsigns);
 
+
+        }else {
+            vitalsigns=new Vitalsigns();
         }
+        bean.setObject(vitalsigns);
         return bean;
 
     }

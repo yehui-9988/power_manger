@@ -2,8 +2,6 @@ package com.neusoft.dao;
 
 import com.neusoft.bean.Role;
 import com.neusoft.bean.RoleMenuRf;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface RoleMenuRfMapper {

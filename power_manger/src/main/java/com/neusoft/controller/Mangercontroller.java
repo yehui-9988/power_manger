@@ -97,7 +97,6 @@ public class Mangercontroller {
             if (rows>0)
             {
                 bean=new ResultBean(10000);
-
             }
             else {
                 bean=new ResultBean(20000);

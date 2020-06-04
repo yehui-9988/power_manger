@@ -8,6 +8,7 @@ import com.neusoft.bean.Pasthistory;
 import com.neusoft.dao.CasehistoryMapper;
 import com.neusoft.dao.PasthistoryMapper;
 import com.neusoft.until.ResultBean;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,7 +106,7 @@ public class CasehistoryController {
 
        }
        else {
-            if (null==casehistory.getDtregister())
+            if (StringUtils.isBlank(casehistory.getDtregister()))
             {
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
                 casehistory.setDtregister(sdf.format(new Date()));

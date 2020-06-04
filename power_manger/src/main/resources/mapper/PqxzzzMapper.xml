@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.PqxzzzMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.bean.Pqxzzz" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="icaseid" property="icaseid" jdbcType="VARCHAR" />
+    <result column="wytime" property="wytime" jdbcType="VARCHAR" />
+    <result column="wycx" property="wycx" jdbcType="VARCHAR" />
+    <result column="wycd" property="wycd" jdbcType="VARCHAR" />
+    <result column="wydp" property="wydp" jdbcType="VARCHAR" />
+    <result column="wyzp" property="wyzp" jdbcType="VARCHAR" />
+    <result column="wztime" property="wztime" jdbcType="VARCHAR" />
+    <result column="wzcx" property="wzcx" jdbcType="VARCHAR" />
+    <result column="wzcd" property="wzcd" jdbcType="VARCHAR" />
+    <result column="wzdp" property="wzdp" jdbcType="VARCHAR" />
+    <result column="wzzp" property="wzzp" jdbcType="VARCHAR" />
+    <result column="fztime" property="fztime" jdbcType="VARCHAR" />
+    <result column="fzcx" property="fzcx" jdbcType="VARCHAR" />
+    <result column="fzcd" property="fzcd" jdbcType="VARCHAR" />
+    <result column="fzdp" property="fzdp" jdbcType="VARCHAR" />
+    <result column="fzzp" property="fzzp" jdbcType="VARCHAR" />
+    <result column="extime" property="extime" jdbcType="VARCHAR" />
+    <result column="excx" property="excx" jdbcType="VARCHAR" />
+    <result column="excd" property="excd" jdbcType="VARCHAR" />
+    <result column="exdp" property="exdp" jdbcType="VARCHAR" />
+    <result column="exzp" property="exzp" jdbcType="VARCHAR" />
+    <result column="vctype" property="vctype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, icaseid, wytime, wycx, wycd, wydp, wyzp, wztime, wzcx, wzcd, wzdp, wzzp, fztime, 
+    fzcx, fzcd, fzdp, fzzp, extime, excx, excd, exdp, exzp, vctype
+  </sql>
+
+  <select id="drawpic" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   SELECT IFNULL(wzzp,0) wzzp,IFNULL(wyzp,0) wyzp ,IFNULL(fzzp,0) fzzp,IFNULL(exzp,0) exzp,vctype
+    FROM pqxzzz
+   where icaseid= #{icaseid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pqxzzz
+    where icaseid = #{0,jdbcType=INTEGER} and vctype=#{1}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pqxzzz
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.bean.Pqxzzz" >
+    insert into pqxzzz (id, icaseid, wytime, 
+      wycx, wycd, wydp, wyzp, 
+      wztime, wzcx, wzcd, 
+      wzdp, wzzp, fztime, 
+      fzcx, fzcd, fzdp, fzzp, 
+      extime, excx, excd, 
+      exdp, exzp, vctype)
+    values (#{id,jdbcType=INTEGER}, #{icaseid,jdbcType=VARCHAR}, #{wytime,jdbcType=VARCHAR}, 
+      #{wycx,jdbcType=VARCHAR}, #{wycd,jdbcType=VARCHAR}, #{wydp,jdbcType=VARCHAR}, #{wyzp,jdbcType=VARCHAR}, 
+      #{wztime,jdbcType=VARCHAR}, #{wzcx,jdbcType=VARCHAR}, #{wzcd,jdbcType=VARCHAR}, 
+      #{wzdp,jdbcType=VARCHAR}, #{wzzp,jdbcType=VARCHAR}, #{fztime,jdbcType=VARCHAR}, 
+      #{fzcx,jdbcType=VARCHAR}, #{fzcd,jdbcType=VARCHAR}, #{fzdp,jdbcType=VARCHAR}, #{fzzp,jdbcType=VARCHAR}, 
+      #{extime,jdbcType=VARCHAR}, #{excx,jdbcType=VARCHAR}, #{excd,jdbcType=VARCHAR}, 
+      #{exdp,jdbcType=VARCHAR}, #{exzp,jdbcType=VARCHAR}, #{vctype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.bean.Pqxzzz" >
+    insert into pqxzzz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="icaseid != null" >
+        icaseid,
+      </if>
+      <if test="wytime != null" >
+        wytime,
+      </if>
+      <if test="wycx != null" >
+        wycx,
+      </if>
+      <if test="wycd != null" >
+        wycd,
+      </if>
+      <if test="wydp != null" >
+        wydp,
+      </if>
+      <if test="wyzp != null" >
+        wyzp,
+      </if>
+      <if test="wztime != null" >
+        wztime,
+      </if>
+      <if test="wzcx != null" >
+        wzcx,
+      </if>
+      <if test="wzcd != null" >
+        wzcd,
+      </if>
+      <if test="wzdp != null" >
+        wzdp,
+      </if>
+      <if test="wzzp != null" >
+        wzzp,
+      </if>
+      <if test="fztime != null" >
+        fztime,
+      </if>
+      <if test="fzcx != null" >
+        fzcx,
+      </if>
+      <if test="fzcd != null" >
+        fzcd,
+      </if>
+      <if test="fzdp != null" >
+        fzdp,
+      </if>
+      <if test="fzzp != null" >
+        fzzp,
+      </if>
+      <if test="extime != null" >
+        extime,
+      </if>
+      <if test="excx != null" >
+        excx,
+      </if>
+      <if test="excd != null" >
+        excd,
+      </if>
+      <if test="exdp != null" >
+        exdp,
+      </if>
+      <if test="exzp != null" >
+        exzp,
+      </if>
+      <if test="vctype != null" >
+        vctype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="icaseid != null" >
+        #{icaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="wytime != null" >
+        #{wytime,jdbcType=VARCHAR},
+      </if>
+      <if test="wycx != null" >
+        #{wycx,jdbcType=VARCHAR},
+      </if>
+      <if test="wycd != null" >
+        #{wycd,jdbcType=VARCHAR},
+      </if>
+      <if test="wydp != null" >
+        #{wydp,jdbcType=VARCHAR},
+      </if>
+      <if test="wyzp != null" >
+        #{wyzp,jdbcType=VARCHAR},
+      </if>
+      <if test="wztime != null" >
+        #{wztime,jdbcType=VARCHAR},
+      </if>
+      <if test="wzcx != null" >
+        #{wzcx,jdbcType=VARCHAR},
+      </if>
+      <if test="wzcd != null" >
+        #{wzcd,jdbcType=VARCHAR},
+      </if>
+      <if test="wzdp != null" >
+        #{wzdp,jdbcType=VARCHAR},
+      </if>
+      <if test="wzzp != null" >
+        #{wzzp,jdbcType=VARCHAR},
+      </if>
+      <if test="fztime != null" >
+        #{fztime,jdbcType=VARCHAR},
+      </if>
+      <if test="fzcx != null" >
+        #{fzcx,jdbcType=VARCHAR},
+      </if>
+      <if test="fzcd != null" >
+        #{fzcd,jdbcType=VARCHAR},
+      </if>
+      <if test="fzdp != null" >
+        #{fzdp,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzp != null" >
+        #{fzzp,jdbcType=VARCHAR},
+      </if>
+      <if test="extime != null" >
+        #{extime,jdbcType=VARCHAR},
+      </if>
+      <if test="excx != null" >
+        #{excx,jdbcType=VARCHAR},
+      </if>
+      <if test="excd != null" >
+        #{excd,jdbcType=VARCHAR},
+      </if>
+      <if test="exdp != null" >
+        #{exdp,jdbcType=VARCHAR},
+      </if>
+      <if test="exzp != null" >
+        #{exzp,jdbcType=VARCHAR},
+      </if>
+      <if test="vctype != null" >
+        #{vctype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.bean.Pqxzzz" >
+    update pqxzzz
+    <set >
+      <if test="icaseid != null" >
+        icaseid = #{icaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="wytime != null" >
+        wytime = #{wytime,jdbcType=VARCHAR},
+      </if>
+      <if test="wycx != null" >
+        wycx = #{wycx,jdbcType=VARCHAR},
+      </if>
+      <if test="wycd != null" >
+        wycd = #{wycd,jdbcType=VARCHAR},
+      </if>
+      <if test="wydp != null" >
+        wydp = #{wydp,jdbcType=VARCHAR},
+      </if>
+      <if test="wyzp != null" >
+        wyzp = #{wyzp,jdbcType=VARCHAR},
+      </if>
+      <if test="wztime != null" >
+        wztime = #{wztime,jdbcType=VARCHAR},
+      </if>
+      <if test="wzcx != null" >
+        wzcx = #{wzcx,jdbcType=VARCHAR},
+      </if>
+      <if test="wzcd != null" >
+        wzcd = #{wzcd,jdbcType=VARCHAR},
+      </if>
+      <if test="wzdp != null" >
+        wzdp = #{wzdp,jdbcType=VARCHAR},
+      </if>
+      <if test="wzzp != null" >
+        wzzp = #{wzzp,jdbcType=VARCHAR},
+      </if>
+      <if test="fztime != null" >
+        fztime = #{fztime,jdbcType=VARCHAR},
+      </if>
+      <if test="fzcx != null" >
+        fzcx = #{fzcx,jdbcType=VARCHAR},
+      </if>
+      <if test="fzcd != null" >
+        fzcd = #{fzcd,jdbcType=VARCHAR},
+      </if>
+      <if test="fzdp != null" >
+        fzdp = #{fzdp,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzp != null" >
+        fzzp = #{fzzp,jdbcType=VARCHAR},
+      </if>
+      <if test="extime != null" >
+        extime = #{extime,jdbcType=VARCHAR},
+      </if>
+      <if test="excx != null" >
+        excx = #{excx,jdbcType=VARCHAR},
+      </if>
+      <if test="excd != null" >
+        excd = #{excd,jdbcType=VARCHAR},
+      </if>
+      <if test="exdp != null" >
+        exdp = #{exdp,jdbcType=VARCHAR},
+      </if>
+      <if test="exzp != null" >
+        exzp = #{exzp,jdbcType=VARCHAR},
+      </if>
+      <if test="vctype != null" >
+        vctype = #{vctype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.bean.Pqxzzz" >
+    update pqxzzz
+    set icaseid = #{icaseid,jdbcType=VARCHAR},
+      wytime = #{wytime,jdbcType=VARCHAR},
+      wycx = #{wycx,jdbcType=VARCHAR},
+      wycd = #{wycd,jdbcType=VARCHAR},
+      wydp = #{wydp,jdbcType=VARCHAR},
+      wyzp = #{wyzp,jdbcType=VARCHAR},
+      wztime = #{wztime,jdbcType=VARCHAR},
+      wzcx = #{wzcx,jdbcType=VARCHAR},
+      wzcd = #{wzcd,jdbcType=VARCHAR},
+      wzdp = #{wzdp,jdbcType=VARCHAR},
+      wzzp = #{wzzp,jdbcType=VARCHAR},
+      fztime = #{fztime,jdbcType=VARCHAR},
+      fzcx = #{fzcx,jdbcType=VARCHAR},
+      fzcd = #{fzcd,jdbcType=VARCHAR},
+      fzdp = #{fzdp,jdbcType=VARCHAR},
+      fzzp = #{fzzp,jdbcType=VARCHAR},
+      extime = #{extime,jdbcType=VARCHAR},
+      excx = #{excx,jdbcType=VARCHAR},
+      excd = #{excd,jdbcType=VARCHAR},
+      exdp = #{exdp,jdbcType=VARCHAR},
+      exzp = #{exzp,jdbcType=VARCHAR},
+      vctype = #{vctype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

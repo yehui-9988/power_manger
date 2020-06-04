@@ -74,7 +74,7 @@
                     <img style="width:40px;height:40px;padding-top:5px;margin-right:80px" src='<%=basePath%>static/imgs/jxutcm.jpg'>
             </el-col>
             <el-col :span="6" style="text-align: left;">
-                <span id="jxutcm" style="font-size: 25px; font-family:楷体;text-align: left;margin-left: 1px">江西中医大学</span>
+                <span id="jxutcm" style="font-size: 25px; font-family:楷体;text-align: left;margin-left: 1px">江西中医药大学</span>
             </el-col>
             <el-col :span="16">
                 <span style="font-size: 18px;font-family:楷体">${sessionScope.manager.rolestr}/</span>
@@ -141,8 +141,6 @@
                         :key="item.name"
                         :label="item.title"
                         :name="item.name"
-
-
                 >
                     <iframe :src="item.src" scrolling="no" style="height: 700px"> </iframe>
                 </el-tab-pane>
@@ -152,8 +150,6 @@
 </el-container>
 
 </div>
-
-
 
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
